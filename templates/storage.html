@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DASH - Storage</title>
+</head>
+<body>
+    <h1>DASH Storage</h1>
+    {% for run in all_run_data %}
+        {{ run["name"] }}
+        <br />
+        {{ run["filename"] }}
+        <br />
+        {{ run["devices"] }}
+        <br />
+        {{ run["params"] }}
+        <br />
+    {% endfor %}
+</body>
+</html>
