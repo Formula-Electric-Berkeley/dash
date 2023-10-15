@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static', filename='style/main.css')}}">
-    <script src="{{url_for('static', filename='js/main.js')}}"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>DASH - Storage</title>
-</head>
-<body>
-    <h1>DASH Storage</h1>
+{%extends "base.html" %} 
+{%block content%}
     {% for run in all_run_data %}
         {{ run["name"] }}
         <br />
@@ -20,5 +10,4 @@
         {{ run["params"] }}
         <br />
     {% endfor %}
-</body>
-</html>
+{% endblock %}
