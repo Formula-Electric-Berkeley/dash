@@ -1,19 +1,13 @@
 import os
-from pymongo import MongoClient
+from flask_pymongo import MongoClient
 from dotenv import load_dotenv
 
 load_dotenv()
 
-
-def get_database():
-    CONNECTION_STRING = os.getenv("ATLAS_URI")
-
-    client = MongoClient(CONNECTION_STRING)
-
-    return client["run_data"]
+CONNECTION_STRING = os.getenv("ATLAS_URI")
+run_data_db = MongoClient(CONNECTION_STRING)["run_data"]
+run_data_collection = run_data_db.records
 
 
-if __name__ == "__main__":
-    dbname = get_database()
-
-    print(dbname)
+def get_all_run_data():
+    return run_data_collection.find()
