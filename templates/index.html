@@ -8,7 +8,14 @@
 <body>
     <h1>DASH</h1>
     {% for run in all_run_data %}
-        {{ run }}
+        {{ run["name"] }}
+        <br />
+        {{ run["filename"] }}
+        <br />
+        {{ run["devices"] }}
+        <br />
+        {{ run["params"] }}
+        <br />
     {% endfor %}
 </body>
 </html>
