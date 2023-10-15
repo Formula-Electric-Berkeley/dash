@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 import db
 
 app = Flask(__name__)
@@ -6,8 +6,8 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return "DASH"
+    return render_template("index.html")
 
 
 if __name__ == "__main__":
-    app.run(port=8000)
+    app.run(threaded=True, use_reloader=True, debug=True)
