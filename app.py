@@ -1,5 +1,5 @@
 from flask import Flask
-from db import run_data_db, run_data_collection
+import db
 
 app = Flask(__name__)
 
