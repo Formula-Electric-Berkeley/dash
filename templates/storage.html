@@ -1,19 +1,27 @@
-{%extends "base.html" %} 
+{%extends "base.html" %}
 {%block content%}
-    <div class="w-full flex justify-center">
-        <table class="w-9/12 max-w-4xl border-separate border-spacing-y-6">
-            <tr>
-                <th class="text-left text-2xl">TITLE <i class="fa-solid fa-thumbtack ml-1 table-heading-icon"></i></th>
-                <th class="text-left text-2xl">FILENAME <i class="fa-solid fa-file ml-1 table-heading-icon"></i></th>
-                <th class="text-right text-2xl">UPLOAD DATE <i class="fa-solid fa-calendar ml-1 table-heading-icon"></i></th>
-            </tr>
-            {% for run in all_run_data %}
-            <tr>
-                <td class="text-xl border-solid border-2 border-white border-r-0 font-medium"><p class="m-3">{{ run["name"] }}</p></td>
-                <td class="text-xl border-solid border-2 border-white border-l-0 border-r-0"><p class="my-3"><i class="fa-solid fa-download mr-1 download-icon"></i> <code>{{ run["filename"] }}</code></p></td>
-                <td class="text-xl border-solid border-2 border-white border-l-0 text-right italic"><p class="m-3">99/99/2099<i class="fa-solid fa-xmark relative left-12 text-xl delete-icon"></i></p></td>
-            </tr>
-            {% endfor %}
-        </table>
-    </div>
+<div class="w-full flex justify-center">
+    <table class="w-9/12 max-w-4xl border-separate border-spacing-y-6">
+        <tr>
+            <th class="text-left text-2xl">TITLE <i class="fa-solid fa-thumbtack ml-1 table-heading-icon"></i></th>
+            <th class="text-left text-2xl">FILENAME <i class="fa-solid fa-file ml-1 table-heading-icon"></i></th>
+            <th class="text-right text-2xl">UPLOAD DATE <i class="fa-solid fa-calendar ml-1 table-heading-icon"></i>
+            </th>
+        </tr>
+        {% for run in all_run_data %}
+        <tr>
+            <td class="text-xl border-solid border-2 border-white border-r-0 font-medium">
+                <p class="m-3">{{ run["name"] }}</p>
+            </td>
+            <td class="text-xl border-solid border-2 border-white border-l-0 border-r-0">
+                <p class="my-3"><i class="fa-solid fa-download mr-1 download-icon"></i>
+                    <code>{{ run["filename"] }}</code></p>
+            </td>
+            <td class="text-xl border-solid border-2 border-white border-l-0 text-right italic">
+                <p class="m-3">99/99/2099<i class="fa-solid fa-xmark relative left-12 text-xl delete-icon"></i></p>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
 {% endblock %}
