@@ -58,3 +58,18 @@ code {
     color: var(--yellow);
     transition: 0.3s;
 }
+
+.upload-icon::before {
+    color: var(--black);
+    transition: 0.3s;
+}
+
+.hover-shadow-yellow {
+    transition: 0.3s;
+}
+
+.hover-shadow-yellow:hover {
+    box-shadow: 0px 0px 20px #FBB414;
+    background-color: #FBB414;
+    transition: 0.3s;
+}
