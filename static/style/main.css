@@ -3,6 +3,7 @@
 :root {
     --yellow: #fbb414;
     --blue: #1e478a;
+    --gray: #808080;
 }
 
 body {
@@ -23,4 +24,16 @@ code {
     color: var(--yellow);
     transition: 0.3s;
     text-shadow: var(--yellow) 0px 0 7px;
+}
+
+.table-heading-icon::before {
+    color: var(--blue);
+}
+
+.delete-icon::before {
+    color: var(--gray);
+}
+
+.download-icon::before {
+    color: var(--gray);  
 }
