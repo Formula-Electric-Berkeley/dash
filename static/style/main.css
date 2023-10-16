@@ -64,6 +64,10 @@ code {
     transition: 0.3s;
 }
 
+.bug-icon::before {
+    color: var(--blue);
+}
+
 .hover-shadow-yellow {
     transition: 0.3s;
 }
