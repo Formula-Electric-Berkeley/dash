@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Inter&display=swap');
 
 :root {
     --yellow: #fbb414;
@@ -9,6 +9,10 @@ body {
     background-color: black;
     color: white;
     font-family: 'Inter', sans-serif;
+}
+
+code {
+    font-family: 'Fira Code', monospace;
 }
 
 .nav-link {
