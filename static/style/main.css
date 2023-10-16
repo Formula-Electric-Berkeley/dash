@@ -16,6 +16,14 @@ code {
     font-family: 'Fira Code', monospace;
 }
 
+.text-yellow {
+    color: var(--yellow)
+}
+
+.bg-yellow {
+    background-color: var(--yellow);
+}
+
 .nav-link {
     transition: 0.5s;
 }
