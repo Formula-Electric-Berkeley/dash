@@ -17,6 +17,6 @@ body {
 
 .nav-link:hover {
     color: var(--yellow);
-    transition: 0.2s;
+    transition: 0.3s;
     text-shadow: var(--yellow) 0px 0 7px;
 }
