@@ -9,9 +9,9 @@
             </tr>
             {% for run in all_run_data %}
             <tr>
-                <td class="text-xl border-solid border-2 border-white border-r-0"><p class="m-3">{{ run["name"] }}</p></td>
+                <td class="text-xl border-solid border-2 border-white border-r-0 font-medium"><p class="m-3">{{ run["name"] }}</p></td>
                 <td class="text-xl border-solid border-2 border-white border-l-0 border-r-0"><p class="my-3"><i class="fa-solid fa-download mr-1 download-icon"></i> <code>{{ run["filename"] }}</code></p></td>
-                <td class="text-xl border-solid border-2 border-white border-l-0 text-right"><p class="m-3">99/99/2099<i class="fa-solid fa-xmark relative left-12 text-xl delete-icon"></i></p></td>
+                <td class="text-xl border-solid border-2 border-white border-l-0 text-right italic"><p class="m-3">99/99/2099<i class="fa-solid fa-xmark relative left-12 text-xl delete-icon"></i></p></td>
             </tr>
             {% endfor %}
         </table>
