@@ -1,13 +1,21 @@
 {%extends "base.html" %} 
 {%block content%}
-    {% for run in all_run_data %}
-        {{ run["name"] }}
-        <br />
-        {{ run["filename"] }}
-        <br />
-        {{ run["devices"] }}
-        <br />
-        {{ run["params"] }}
-        <br />
-    {% endfor %}
+    <div class="w-full flex justify-center">
+        <table class="w-9/12 max-w-4xl">
+            <tr>
+                <th class="text-left text-2xl">TITLE</th>
+                <th class="text-left text-2xl">FILENAME</th>
+                <th class="text-right text-2xl">UPLOAD DATE</th>
+            </tr>
+            {% for run in all_run_data %}
+            <tr>
+                <div>
+                    <td class="text-xl">{{ run["name"] }}</td>
+                    <td class="text-xl">{{ run["filename"] }}</td>
+                    <td class="text-xl text-right">99/99/2099</td>
+                </div>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
 {% endblock %}
