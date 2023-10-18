@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='style/main.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="icon" href="{{url_for('static', filename='img/favicon.ico')}}" />
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>FEB D.A.S.H.</title>
+</head>
+
+<body>
+    <nav>
+        <div class="flex justify-between p-10 text-3xl">
+            <div>
+                <a href="./"><img class="h-14" src="{{url_for('static', filename='img/FEBLOGO_DASH.png')}}"
+                        alt="FEB Logo"></a>
+            </div>
+            <div>
+                <ul class="list-none m-0 p-0">
+                    <li class="float-left block text-center py-3.5 px-4"><a class="nav-link"
+                            href="./analysis">ANALYSIS</a></li>
+                    <li class="float-left block text-center py-3.5 px-4"><a class="nav-link" href="./storage">STORAGE</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% block content %}
+    {% endblock %}
+</body>
+
+</html>
