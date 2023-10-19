@@ -24,9 +24,6 @@ def analysis():
 @app.route("/storage", methods=["GET", "POST"])
 def storage():
     if request.method == "POST":
-        print(request.form)
-        print(request.files["file"])
-
         if "file" not in request.files:
             flash("No file part")
             return redirect(request.url)
@@ -37,7 +34,9 @@ def storage():
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+            filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+
+            file.save(filepath)
 
             data_info = {
                 "name": request.form["title"],
@@ -45,13 +44,13 @@ def storage():
                 "date": datetime.date.today().strftime("%x"),
             }
 
-            data = parsing.parse_csv(
-                os.path.join(app.config["UPLOAD_FOLDER"], filename)
-            )
+            data = parsing.parse_csv(filepath)
 
             data_info.update(data)
 
             db.run_data_collection.insert_one(data_info)
+
+            os.remove(filepath)
 
             return redirect("/storage")
 
