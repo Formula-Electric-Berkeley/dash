@@ -16,7 +16,14 @@ def analysis():
 
 @app.route("/storage")
 def storage():
-    return render_template("storage.html", all_run_data=db.get_all_run_data())
+    return render_template(
+        "storage.html",
+        all_run_data=db.get_all_run_data(),
+        storage_size=round(db.run_data_db.command("dbstats")["dataSize"] / 1e6, 1),
+        storage_size_percent=round(
+            (db.run_data_db.command("dbstats")["dataSize"] / 1e6) / 512 * 100, 2
+        ),
+    )
 
 
 @app.errorhandler(404)
