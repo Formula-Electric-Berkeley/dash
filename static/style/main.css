@@ -21,7 +21,7 @@ code {
 }
 
 .bg-yellow {
-    background-color: var(--yellow);
+    background-color: var(--yellow) !important;
 }
 
 .nav-link {
