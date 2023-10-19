@@ -1,5 +1,6 @@
 import os
 import db
+import parsing
 from flask import Flask, flash, redirect, render_template, request, url_for
 from werkzeug.utils import secure_filename
 
@@ -36,6 +37,8 @@ def storage():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+
+            parsing.parse_csv(os.path.join(app.config["UPLOAD_FOLDER"], filename))
 
     return render_template(
         "storage.html",
