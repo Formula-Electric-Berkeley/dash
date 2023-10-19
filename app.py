@@ -1,3 +1,4 @@
+import datetime
 import os
 import db
 import parsing
@@ -38,11 +39,20 @@ def storage():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
 
+            data_info = {
+                "name": request.form["title"],
+                "filename": filename,
+                "date": datetime.date.today().strftime("%x"),
+            }
+
             data = parsing.parse_csv(
                 os.path.join(app.config["UPLOAD_FOLDER"], filename)
             )
-            db.run_data_collection.insert_one(data)
-            
+
+            data_info.update(data)
+
+            db.run_data_collection.insert_one(data_info)
+
             return redirect("/storage")
 
     return render_template(
