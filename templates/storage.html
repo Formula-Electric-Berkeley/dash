@@ -36,7 +36,8 @@
         </p>
       </td>
       <td class="text-xl border-solid border-2 border-white border-l-0 text-right italic">
-        <p class="m-3">{{ run["date"] }}<a onclick="delete_document('{{ run['_id'] }}')"><i class="fa-solid fa-xmark relative left-12 text-xl delete-icon"></i></a></p>
+        <p class="m-3">{{ run["date"] }}<a class="hover:cursor-pointer" onclick="delete_document('{{ run['_id'] }}')"><i
+              class="fa-solid fa-xmark relative left-12 text-xl delete-icon"></i></a></p>
       </td>
     </tr>
     {% endfor %}
