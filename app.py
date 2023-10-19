@@ -38,7 +38,12 @@ def storage():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
 
-            parsing.parse_csv(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+            data = parsing.parse_csv(
+                os.path.join(app.config["UPLOAD_FOLDER"], filename)
+            )
+            db.run_data_collection.insert_one(data)
+            
+            return redirect("/storage")
 
     return render_template(
         "storage.html",
