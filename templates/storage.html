@@ -1,11 +1,19 @@
 {%extends "base.html" %}
 {%block content%}
 <div class="w-full flex justify-center">
-  <div class="w-9/12 max-w-4xl flex">
-    <h1 class="text-4xl font-medium">STORAGE HUB</h1>
-    <button class="bg-yellow px-5 ml-6 text-black font-bold rounded-full hover-shadow-yellow"
-      onclick="handleModal('storageUploadModal')">UPLOAD DATA<i
-        class="fa-solid fa-arrow-up-from-bracket ml-2 upload-icon"></i></button>
+  <div class="w-9/12 max-w-4xl flex justify-between">
+    <div class="flex">
+      <h1 class="text-4xl font-medium">STORAGE HUB</h1>
+      <button class="bg-yellow h-10 px-5 ml-6 text-black font-bold rounded-full hover-shadow-yellow"
+        onclick="handleModal('storageUploadModal')">UPLOAD DATA<i
+          class="fa-solid fa-arrow-up-from-bracket ml-2 upload-icon"></i></button>
+    </div>
+    <div class="w-2/5 px-4 pr-0 flex flex-col justify-center">
+      <div class="w-full h-3 rounded-full bg-gray-600">
+        <div class="w-1/2 h-full rounded-full bg-emerald-600"></div>
+      </div>
+      <h1>3.3 MB / 512.0 MB (1%)</h1>
+    </div>
   </div>
 </div>
 <div class="w-full flex justify-center">
