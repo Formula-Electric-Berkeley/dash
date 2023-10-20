@@ -4,6 +4,7 @@ import db
 import parsing
 from flask import Flask, flash, redirect, render_template, request, url_for
 from werkzeug.utils import secure_filename
+from bson.objectid import ObjectId
 
 ALLOWED_EXTENSIONS = {"csv"}
 
@@ -62,6 +63,12 @@ def storage():
             (db.run_data_db.command("dbstats")["dataSize"] / 1e6) / 512 * 100, 2
         ),
     )
+
+
+@app.route("/delete_document/<id>", methods=["DELETE"])
+def delete(id):
+    db.run_data_collection.delete_one({"_id": ObjectId(id)})
+    return f"Sucessfully deleted document with id: {id}"
 
 
 @app.errorhandler(404)
