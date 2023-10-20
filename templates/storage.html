@@ -22,6 +22,7 @@
     <tr>
       <th class="text-left text-2xl">TITLE <i class="fa-solid fa-thumbtack ml-2 table-heading-icon"></i></th>
       <th class="text-left text-2xl">FILENAME <i class="fa-solid fa-file ml-2 table-heading-icon"></i></th>
+      <th class="text-center text-2xl">SIZE <i class="fa-solid fa-database ml-2 table-heading-icon"></i></th>
       <th class="text-right text-2xl">UPLOAD DATE <i class="fa-solid fa-calendar ml-2 table-heading-icon"></i>
       </th>
     </tr>
@@ -34,6 +35,9 @@
         <p class="my-3"><i class="fa-solid fa-download mr-1 download-icon"></i>
           <code>{{ run["filename"] }}</code>
         </p>
+      </td>
+      <td class="text-xl border-solid border-2 border-white border-l-0 border-r-0 text-center">
+        <p class="my-3">{{ run["filesize"] }}</p>
       </td>
       <td class="text-xl border-solid border-2 border-white border-l-0 text-right italic">
         <p class="m-3">{{ run["date"] }}<a class="hover:cursor-pointer" onclick="delete_document('{{ run['_id'] }}')"><i
