@@ -12,3 +12,12 @@ window.onclick = function (event) {
         document.getElementById("storageUploadModal").style.display = "none";
     }
 }
+
+function delete_document(id) {
+    fetch('./delete_document/' + id, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }).then(location.reload());
+}
