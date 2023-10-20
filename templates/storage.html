@@ -37,7 +37,7 @@
         </p>
       </td>
       <td class="text-xl border-solid border-2 border-white border-l-0 border-r-0 text-center">
-        <p class="my-3">{{ run["filesize"] }}</p>
+        <p class="my-3">{{ get_document_size(run) }} MB</p>
       </td>
       <td class="text-xl border-solid border-2 border-white border-l-0 text-right italic">
         <p class="m-3">{{ run["date"] }}<a class="hover:cursor-pointer" onclick="delete_document('{{ run['_id'] }}')"><i

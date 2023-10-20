@@ -1,5 +1,7 @@
 import datetime
 import os
+
+import bson
 import db
 import parsing
 from flask import Flask, flash, redirect, render_template, request, url_for
@@ -62,6 +64,7 @@ def storage():
         storage_size_percent=round(
             (db.run_data_db.command("dbstats")["dataSize"] / 1e6) / 512 * 100, 2
         ),
+        get_document_size=lambda x: round(len(bson.BSON.encode(x)) / 1e+6, 2)
     )
 
 
