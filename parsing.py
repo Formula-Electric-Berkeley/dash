@@ -62,7 +62,7 @@ def dict_to_csv(data, output_file):
         writer.writerows(csv_data)
 
 
-"""example test case for creating cs
+"""example test case for creating csv
 data = {
     "devices": ["BMS"],
     "params": ["BMS_TEMPERATURE", "BMS_VOLTAGE", "BMS_SOMETHING"],
