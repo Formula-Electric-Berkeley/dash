@@ -103,12 +103,11 @@ def storage():
     return render_template(
         "storage.html",
         # all_run_data=db.get_all_run_data(),
-        all_run_data=db.dash_headers_collection.find(),
+        data_headers=db.dash_headers_collection.find(),
         storage_size=round(db.dash_db.command("dbstats")["dataSize"] / 1e6, 1),
         storage_size_percent=round(
             (db.dash_db.command("dbstats")["dataSize"] / 1e6) / 512 * 100, 2
         ),
-        get_document_size=lambda x: round(len(bson.BSON.encode(x)) / 1e6, 2),
     )
 
 

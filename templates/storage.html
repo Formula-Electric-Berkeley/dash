@@ -26,21 +26,21 @@
       <th class="text-right text-2xl">UPLOAD DATE <i class="fa-solid fa-calendar ml-2 table-heading-icon"></i>
       </th>
     </tr>
-    {% for run in all_run_data %}
+    {% for data_header in data_headers %}
     <tr>
       <td class="text-xl border-solid border-2 border-white border-r-0 font-medium">
-        <p class="m-3">{{ run["name"] }}</p>
+        <p class="m-3">{{ data_header["name"] }}</p>
       </td>
       <td class="text-xl border-solid border-2 border-white border-l-0 border-r-0">
         <p class="my-3"><i class="fa-solid fa-download mr-1 download-icon"></i>
-          <code>{{ run["filename"] }}</code>
+          <code>{{ data_header["filename"] }}</code>
         </p>
       </td>
       <td class="text-xl border-solid border-2 border-white border-l-0 border-r-0 text-center">
-        <p class="my-3">{{ run["size"] }} MB</p>
+        <p class="my-3">{{ data_header["size"] }} MB</p>
       </td>
       <td class="text-xl border-solid border-2 border-white border-l-0 text-right italic">
-        <p class="m-3">{{ run["date"] }}<a class="hover:cursor-pointer" onclick="delete_document('{{ run['_id'] }}')"><i
+        <p class="m-3">{{ data_header["date"] }}<a class="hover:cursor-pointer" onclick="delete_document('{{ data_header['_id'] }}')"><i
               class="fa-solid fa-xmark relative left-12 text-xl delete-icon"></i></a></p>
       </td>
     </tr>
