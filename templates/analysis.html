@@ -4,27 +4,47 @@
 <div class="w-full flex justify-center">
     <div class="w-9/12 max-w-4xl">
         <div>
-            <form method=post enctype=multipart/form-data action="/analysis">
-                <select class="text-black w-1/4 mr-3 px-2 py-1 rounded-lg" onchange="updateSelect('device', 'devices')"
-                    name="source" id="source">
-                    <option value="" disabled selected>Select data source</option>
-                </select>
-                <select class="text-black w-1/4 mx-3 px-2 py-1 rounded-lg"
-                    onchange="updateSelect('parameter', 'params')" name="device" id="device">
-                    <option value="" disabled selected>Select device</option>
-                </select>
-                <select class="text-black w-1/4 mx-3 px-2 py-1 rounded-lg" name="parameter" id="parameter">
-                    <option value="" disabled selected>Select parameter</option>
-                </select>
-                <input class="px-10 py-1 bg-yellow hover-shadow-yellow rounded-full text-black font-bold cursor-pointer"
-                    type=submit value="ADD">
-            </form>
+            <select class="text-black w-1/4 mr-2 px-2 py-1 rounded-lg border-none outline-none"
+                onchange="updateSelect('device', 'devices')" name="source" id="source">
+                <option value="" disabled selected>Select data source</option>
+            </select>
+            <select class="text-black w-1/4 mx-2 px-2 py-1 rounded-lg border-none outline-none"
+                onchange="updateSelect('parameter', 'params')" name="device" id="device">
+                <option value="" disabled selected>Select device</option>
+            </select>
+            <select class="text-black w-1/4 mx-2 px-2 py-1 rounded-lg border-none outline-none" name="parameter"
+                id="parameter">
+                <option value="" disabled selected>Select parameter</option>
+            </select>
+            <button onclick="addSource()"
+                class="ml-2 px-10 py-1 text-lg bg-yellow hover-shadow-yellow rounded-full text-black font-bold cursor-pointer">ADD
+                <i class="fa-solid fa-circle-plus ml-1 upload-icon"></i></button>
         </div>
     </div>
 </div>
 
 <script>
     all_run_data_json = JSON.parse("{{ all_run_data_json }}".replaceAll("&#39;", "\"").replace(/ObjectId\("([^"]+)"\)/g, "\"$1\""))
+
+    function addSource() {
+        let sourceValue = document.getElementById("source").value
+        let deviceValue = document.getElementById("device").value
+        let parameterValue = document.getElementById("parameter").value
+
+        if (sourceValue && deviceValue && parameterValue) {
+            fetch('./graph', {
+                method: 'POST',
+                body: JSON.stringify({
+                    "source": sourceValue,
+                    "device": deviceValue,
+                    "parameter": parameterValue
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        }
+    }
 
     for (var key in all_run_data_json) {
         run = all_run_data_json[key]
