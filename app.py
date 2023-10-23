@@ -59,7 +59,7 @@ def storage():
 
             file.save(filepath)
 
-            data_info = {
+            data_header = {
                 "name": request.form["title"],
                 "filename": filename,
                 "date": datetime.date.today().strftime("%x"),
@@ -68,9 +68,33 @@ def storage():
             data = parsing.parse_csv(filepath)
             # data = parsing.parse_csv_dynamics(filepath)
 
-            data_info.update(data)
+            insert_header_result = db.dash_headers_collection.insert_one(data_header)
 
-            db.run_data_collection.insert_one(data_info)
+            data_header.update(data)
+            data_header.update({"_id": insert_header_result.inserted_id})
+
+            db.dash_data_collection.insert_one(data_header)
+
+            db.dash_headers_collection.update_one(
+                {
+                    "_id": insert_header_result.inserted_id,
+                },
+                {
+                    "$set": {
+                        "size": round(
+                            len(
+                                bson.BSON.encode(
+                                    db.dash_data_collection.find_one(
+                                        {"_id": insert_header_result.inserted_id}
+                                    )
+                                )
+                            )
+                            / 1e6,
+                            1,
+                        ),
+                    },
+                },
+            )
 
             os.remove(filepath)
 
@@ -78,10 +102,11 @@ def storage():
 
     return render_template(
         "storage.html",
-        all_run_data=db.get_all_run_data(),
-        storage_size=round(db.run_data_db.command("dbstats")["dataSize"] / 1e6, 1),
+        # all_run_data=db.get_all_run_data(),
+        all_run_data=db.dash_headers_collection.find(),
+        storage_size=round(db.dash_db.command("dbstats")["dataSize"] / 1e6, 1),
         storage_size_percent=round(
-            (db.run_data_db.command("dbstats")["dataSize"] / 1e6) / 512 * 100, 2
+            (db.dash_db.command("dbstats")["dataSize"] / 1e6) / 512 * 100, 2
         ),
         get_document_size=lambda x: round(len(bson.BSON.encode(x)) / 1e6, 2),
     )
@@ -89,7 +114,8 @@ def storage():
 
 @app.route("/delete_document/<id>", methods=["DELETE"])
 def delete(id):
-    db.run_data_collection.delete_one({"_id": ObjectId(id)})
+    db.dash_headers_collection.delete_one({"_id": ObjectId(id)})
+    db.dash_data_collection.delete_one({"_id": ObjectId(id)})
     return f"Sucessfully deleted document with id: {id}"
 
 
