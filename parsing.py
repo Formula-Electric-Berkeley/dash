@@ -1,4 +1,5 @@
 # imports
+import json
 import pandas as pd
 import csv
 
@@ -84,3 +85,30 @@ data = {
 output_file = 'output.csv' 
 dict_to_csv(data, output_file) # output file should now have newly updated csv
 """
+
+def parse_csv_dynamics(filepath):
+    df = pd.read_csv(filepath)
+
+    # dictionary
+    data = {"devices": [], "params": [], "param_data": {}}
+
+    data["devices"].append(df.iat[1, 1])
+
+    for col in df:
+        if col != "Time" and col != "DeviceName":
+            data["params"].append(col)
+            data["param_data"][col] = {}
+
+            data["param_data"][col]["timestamps"], data["param_data"][col]["data"] = [], []
+
+            for i, timestamp in df["Time"].items():
+                data["param_data"][col]["timestamps"].append(timestamp)
+
+            for i, data_value in df[col].items():
+                data["param_data"][col]["data"].append(data_value)
+
+    # just for easy viewing
+    # output = json.dumps(data, indent=2)
+    # print(output)
+
+    return data
