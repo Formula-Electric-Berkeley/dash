@@ -23,8 +23,7 @@ def index():
 def analysis():
     return render_template(
         "analysis.html",
-        all_run_data_json=loads(dumps(db.get_all_run_data())),
-        all_run_data=db.get_all_run_data(),
+        data_headers_json=loads(dumps(db.dash_headers_collection.find())),
     )
 
 

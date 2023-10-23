@@ -25,7 +25,7 @@
 </div>
 
 <script>
-    all_run_data_json = JSON.parse("{{ all_run_data_json }}".replaceAll("&#39;", "\"").replace(/ObjectId\("([^"]+)"\)/g, "\"$1\""))
+    all_run_data_json = JSON.parse("{{ data_headers_json }}".replaceAll("&#39;", "\"").replace(/ObjectId\("([^"]+)"\)/g, "\"$1\""))
 
     graphData = []
     graphDiv = document.getElementById('graph')
