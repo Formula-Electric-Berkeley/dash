@@ -66,6 +66,7 @@ def storage():
             }
 
             data = parsing.parse_csv(filepath)
+            # data = parsing.parse_csv_dynamics(filepath)
 
             data_info.update(data)
 
