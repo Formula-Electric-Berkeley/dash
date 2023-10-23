@@ -27,6 +27,35 @@
 <script>
     all_run_data_json = JSON.parse("{{ all_run_data_json }}".replaceAll("&#39;", "\"").replace(/ObjectId\("([^"]+)"\)/g, "\"$1\""))
 
+    graphData = []
+    graphDiv = document.getElementById('graph')
+    graphLayout = {
+        font: {
+            family: 'Inter, sans-serif',
+            size: 16,
+            color: '#fff'
+        },
+        margin: { t: 0, r: 0 },
+        paper_bgcolor: "#000000",
+        plot_bgcolor: "#000000",
+        yaxis: {
+            title: {
+                text: 'VALUES',
+            },
+            zerolinecolor: "#fff",
+            gridcolor: "gray",
+            griddash: 'dot',
+        },
+        xaxis: {
+            title: {
+                text: 'TIME',
+            },
+            zeroline: false,
+        }
+    }
+
+    Plotly.newPlot(graphDiv, graphData, graphLayout)
+
     function addSource() {
         let sourceValue = document.getElementById("source").value
         let deviceValue = document.getElementById("device").value
@@ -46,34 +75,38 @@
             }).then(response => {
                 return response.json();
             }).then(data => {
-                graphDiv = document.getElementById('graph')
-                Plotly.newPlot(graphDiv, [{
+                graphData.push({
                     x: data["timestamps"],
                     y: data["data"]
-                }], {
-                    font: {
-                        family: 'Inter, sans-serif',
-                        size: 16,
-                        color: '#fff'
-                    },
-                    margin: { t: 0, r: 0 },
-                    paper_bgcolor: "#000000",
-                    plot_bgcolor: "#000000",
-                    yaxis: {
-                        title: {
-                            text: 'VALUES',
-                        },
-                        zerolinecolor: "#fff",
-                        gridcolor: "gray",
-                        griddash: 'dot',
-                    },
-                    xaxis: {
-                        title: {
-                            text: 'TIME',
-                        },
-                        zeroline: false,
-                    }
-                });
+                })
+                Plotly.update(graphDiv, graphData, graphLayout)
+                // Plotly.newPlot(graphDiv, [{
+                //     x: data["timestamps"],
+                //     y: data["data"]
+                // }], {
+                //     font: {
+                //         family: 'Inter, sans-serif',
+                //         size: 16,
+                //         color: '#fff'
+                //     },
+                //     margin: { t: 0, r: 0 },
+                //     paper_bgcolor: "#000000",
+                //     plot_bgcolor: "#000000",
+                //     yaxis: {
+                //         title: {
+                //             text: 'VALUES',
+                //         },
+                //         zerolinecolor: "#fff",
+                //         gridcolor: "gray",
+                //         griddash: 'dot',
+                //     },
+                //     xaxis: {
+                //         title: {
+                //             text: 'TIME',
+                //         },
+                //         zeroline: false,
+                //     }
+                // });
             });
         }
     }
