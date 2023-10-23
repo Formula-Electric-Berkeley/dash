@@ -6,15 +6,18 @@
 <div class="w-full flex justify-center">
     <div class="w-9/12 max-w-4xl">
         <div>
-            <select class="text-black w-1/4 mr-3 px-2 py-1 rounded-lg" onchange="updateSelect('device', 'devices')" name="source" id="source">
-                <option value="" disabled selected hidden>Select data source</option>
-            </select>
-            <select class="text-black w-1/4 mx-3 px-2 py-1 rounded-lg" onchange="updateSelect('parameter', 'params')" name="device" id="device">
-                <option value="" disabled selected hidden>Select device</option>
-            </select>
-            <select class="text-black w-1/4 ml-3 px-2 py-1 rounded-lg" name="parameter" id="parameter">
-                <option value="" disabled selected hidden>Select parameter</option>
-            </select>
+            <form method=post enctype=multipart/form-data action="/analysis">
+                <select class="text-black w-1/4 mr-3 px-2 py-1 rounded-lg" onchange="updateSelect('device', 'devices')" name="source" id="source">
+                    <option value="" disabled selected>Select data source</option>
+                </select>
+                <select class="text-black w-1/4 mx-3 px-2 py-1 rounded-lg" onchange="updateSelect('parameter', 'params')" name="device" id="device">
+                    <option value="" disabled selected>Select device</option>
+                </select>
+                <select class="text-black w-1/4 mx-3 px-2 py-1 rounded-lg" name="parameter" id="parameter">
+                    <option value="" disabled selected>Select parameter</option>
+                </select>
+                <input class="px-10 py-1 bg-yellow hover-shadow-yellow rounded-full text-black font-bold cursor-pointer" type=submit value="ADD">
+            </form>
         </div>
     </div>
 </div>
