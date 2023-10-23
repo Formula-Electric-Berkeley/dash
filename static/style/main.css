@@ -77,3 +77,7 @@ code {
     background-color: var(--yellow);
     transition: 0.3s;
 }
+
+#globeDiv {
+    height: 500px;
+}
