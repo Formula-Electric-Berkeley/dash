@@ -1,30 +1,31 @@
 {%extends "base.html" %}
 {%block content%}
 
-<h1>Analysis</h1>
-
 <div class="w-full flex justify-center">
     <div class="w-9/12 max-w-4xl">
         <div>
             <form method=post enctype=multipart/form-data action="/analysis">
-                <select class="text-black w-1/4 mr-3 px-2 py-1 rounded-lg" onchange="updateSelect('device', 'devices')" name="source" id="source">
+                <select class="text-black w-1/4 mr-3 px-2 py-1 rounded-lg" onchange="updateSelect('device', 'devices')"
+                    name="source" id="source">
                     <option value="" disabled selected>Select data source</option>
                 </select>
-                <select class="text-black w-1/4 mx-3 px-2 py-1 rounded-lg" onchange="updateSelect('parameter', 'params')" name="device" id="device">
+                <select class="text-black w-1/4 mx-3 px-2 py-1 rounded-lg"
+                    onchange="updateSelect('parameter', 'params')" name="device" id="device">
                     <option value="" disabled selected>Select device</option>
                 </select>
                 <select class="text-black w-1/4 mx-3 px-2 py-1 rounded-lg" name="parameter" id="parameter">
                     <option value="" disabled selected>Select parameter</option>
                 </select>
-                <input class="px-10 py-1 bg-yellow hover-shadow-yellow rounded-full text-black font-bold cursor-pointer" type=submit value="ADD">
+                <input class="px-10 py-1 bg-yellow hover-shadow-yellow rounded-full text-black font-bold cursor-pointer"
+                    type=submit value="ADD">
             </form>
         </div>
     </div>
 </div>
 
 <script>
-    all_run_data_json = JSON.parse("{{ all_run_data_json }}".replaceAll("&#39;","\"").replace(/ObjectId\("([^"]+)"\)/g, "\"$1\""))
-    
+    all_run_data_json = JSON.parse("{{ all_run_data_json }}".replaceAll("&#39;", "\"").replace(/ObjectId\("([^"]+)"\)/g, "\"$1\""))
+
     for (var key in all_run_data_json) {
         run = all_run_data_json[key]
 
