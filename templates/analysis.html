@@ -3,7 +3,7 @@
 
 <div class="w-full flex justify-center">
     <div class="w-9/12 max-w-4xl">
-        <div>
+        <div class="text-center">
             <select class="text-black w-1/4 mr-2 px-2 py-1 rounded-lg border-none outline-none"
                 onchange="updateSelect('device', 'devices')" name="source" id="source">
                 <option value="" disabled selected>Select data source</option>
@@ -20,7 +20,7 @@
                 class="ml-2 px-10 py-1 text-lg bg-yellow hover-shadow-yellow rounded-full text-black font-bold cursor-pointer">ADD
                 <i class="fa-solid fa-circle-plus ml-1 upload-icon"></i></button>
         </div>
-        <div id="graph"></div>
+        <div class="mt-10" id="graph"></div>
     </div>
 </div>
 
@@ -51,7 +51,28 @@
                     x: data["timestamps"],
                     y: data["data"]
                 }], {
-                    margin: { t: 0 }
+                    font: {
+                        family: 'Inter, sans-serif',
+                        size: 16,
+                        color: '#fff'
+                    },
+                    margin: { t: 0, r: 0 },
+                    paper_bgcolor: "#000000",
+                    plot_bgcolor: "#000000",
+                    yaxis: {
+                        title: {
+                            text: 'VALUES',
+                        },
+                        zerolinecolor: "#fff",
+                        gridcolor: "gray",
+                        griddash: 'dot',
+                    },
+                    xaxis: {
+                        title: {
+                            text: 'TIME',
+                        },
+                        zeroline: false,
+                    }
                 });
             });
         }
