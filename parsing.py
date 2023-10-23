@@ -3,35 +3,35 @@ import json
 import pandas as pd
 import csv
 
-def parse_csv(filepath):
-    df = pd.read_csv(filepath)
+# def parse_csv(filepath):
+#     df = pd.read_csv(filepath)
 
-    # dictionary
-    data = {"devices": [], "params": [], "param_data": {}}
+#     # dictionary
+#     data = {"devices": [], "params": [], "param_data": {}}
 
-    # loop through each row
-    for index, row in df.iterrows():
-        device = row["Device"]
-        param = row["Message"]
-        data_values = [row["Timestamps"], row["Data"]]
+#     # loop through each row
+#     for index, row in df.iterrows():
+#         device = row["Device"]
+#         param = row["Message"]
+#         data_values = [row["Timestamps"], row["Data"]]
 
-        if device not in data["devices"]:
-            data["devices"].append(device)
+#         if device not in data["devices"]:
+#             data["devices"].append(device)
 
-        if param not in data["params"]:
-            data["params"].append(param)
+#         if param not in data["params"]:
+#             data["params"].append(param)
 
-        if param not in data["param_data"]:
-            data["param_data"][param] = {"timestamps": [], "data": []}
+#         if param not in data["param_data"]:
+#             data["param_data"][param] = {"timestamps": [], "data": []}
 
-        data["param_data"][param]["timestamps"].append(data_values[0])
-        data["param_data"][param]["data"].append(data_values[1])
+#         data["param_data"][param]["timestamps"].append(data_values[0])
+#         data["param_data"][param]["data"].append(data_values[1])
 
-    # just for easy viewing
-    # output = json.dumps(data, indent=2)
-    # print(output)
+#     # just for easy viewing
+#     # output = json.dumps(data, indent=2)
+#     # print(output)
 
-    return data
+#     return data
 
 # take in data dictionary and empty csv file and update the csv file with relevant data
 def dict_to_csv(data, output_file):
@@ -86,29 +86,19 @@ output_file = 'output.csv'
 dict_to_csv(data, output_file) # output file should now have newly updated csv
 """
 
-def parse_csv_dynamics(filepath):
+def parse_csv(filepath):
     df = pd.read_csv(filepath)
 
-    # dictionary
-    data = {"devices": [], "params": [], "param_data": {}}
+    data = {}
 
-    data["devices"].append(df.iat[1, 1])
+    data["parameters"] = []
 
     for col in df:
-        if col != "Time" and col != "DeviceName":
-            data["params"].append(col)
-            data["param_data"][col] = {}
-
-            data["param_data"][col]["timestamps"], data["param_data"][col]["data"] = [], []
-
-            for i, timestamp in df["Time"].items():
-                data["param_data"][col]["timestamps"].append(timestamp)
-
-            for i, data_value in df[col].items():
-                data["param_data"][col]["data"].append(data_value)
-
-    # just for easy viewing
-    # output = json.dumps(data, indent=2)
-    # print(output)
+        if col == "Time":
+            data["timestamps"] = list(df[col].to_numpy())
+        elif col == "DeviceName":
+            data["devices"] = list(set(df[col].to_numpy()))
+        else:
+            data[col] = list(df[col].to_numpy())
 
     return data
