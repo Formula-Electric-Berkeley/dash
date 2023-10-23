@@ -21,7 +21,7 @@ code {
 }
 
 .bg-yellow {
-    background-color: var(--yellow);
+    background-color: var(--yellow) !important;
 }
 
 .nav-link {
@@ -76,4 +76,8 @@ code {
     box-shadow: 0px 0px 20px var(--yellow);
     background-color: var(--yellow);
     transition: 0.3s;
+}
+
+#globeDiv {
+    height: 500px;
 }
