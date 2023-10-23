@@ -3,4 +3,63 @@
 
 <h1>Analysis</h1>
 
+<div class="w-full flex justify-center">
+    <div class="w-9/12 max-w-4xl">
+        <select class="text-black" onchange="setSourceSelect()" name="source" id="source">
+            <option value="" disabled selected hidden>Select data source</option>
+        </select>
+        <script>
+            all_run_data_json = JSON.parse("{{ all_run_data_json }}".replaceAll("&#39;","\"").replace(/ObjectId\("([^"]+)"\)/g, "\"$1\""))
+            
+            for (var key in all_run_data_json) {
+                run = all_run_data_json[key]
+
+                var opt = document.createElement('option');
+                opt.value = run["_id"];
+                opt.innerHTML = run["name"];
+
+                document.getElementById("source").appendChild(opt);
+            }
+
+            function setSourceSelect() {  
+                for (var key in all_run_data_json) {
+                    run = all_run_data_json[key]
+
+                    if (run["_id"] == document.getElementById("source").value) {
+                        for (var i in run["devices"]) {
+                            var opt = document.createElement('option');
+                            opt.value = run["devices"][i];
+                            opt.innerHTML = run["devices"][i];
+    
+                            document.getElementById("device").appendChild(opt);
+                        }
+                    }
+                }
+            }
+
+            function setDeviceSelect() {
+                for (var key in all_run_data_json) {
+                    run = all_run_data_json[key]
+
+                    if (run["_id"] == document.getElementById("source").value) {
+                        for (var i in run["params"]) {
+                            var opt = document.createElement('option');
+                            opt.value = run["params"][i];
+                            opt.innerHTML = run["params"][i];
+    
+                            document.getElementById("parameter").appendChild(opt);
+                        }
+                    }
+                }
+            }
+        </script>
+        <select class="text-black" onchange="setDeviceSelect()" name="device" id="device">
+            <option value="" disabled selected hidden>Select device</option>
+        </select>
+        <select class="text-black" name="parameter" id="parameter">
+            <option value="" disabled selected hidden>Select parameter</option>
+        </select>
+    </div>
+</div>
+
 {% endblock %}
