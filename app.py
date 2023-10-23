@@ -1,9 +1,9 @@
 import datetime
 import os
-
 import bson
 import db
 import parsing
+from bson.json_util import dumps, loads
 from flask import Flask, flash, redirect, render_template, request, url_for
 from werkzeug.utils import secure_filename
 from bson.objectid import ObjectId
@@ -19,9 +19,16 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/analysis")
+@app.route("/analysis", methods=["GET", "POST"])
 def analysis():
-    return render_template("analysis.html")
+    if request.method == "POST":
+        print(request)
+    
+    return render_template(
+        "analysis.html",
+        all_run_data_json=loads(dumps(db.get_all_run_data())),
+        all_run_data=db.get_all_run_data(),
+    )
 
 
 @app.route("/storage", methods=["GET", "POST"])
@@ -64,7 +71,7 @@ def storage():
         storage_size_percent=round(
             (db.run_data_db.command("dbstats")["dataSize"] / 1e6) / 512 * 100, 2
         ),
-        get_document_size=lambda x: round(len(bson.BSON.encode(x)) / 1e+6, 2)
+        get_document_size=lambda x: round(len(bson.BSON.encode(x)) / 1e6, 2),
     )
 
 
