@@ -37,6 +37,7 @@ def graph():
     source_document = db.run_data_collection.find_one({"_id": ObjectId(source_id)})
 
     data = source_document["param_data"][parameter]
+    data["name"] = f"{source_document['name']} {device} {parameter}"
 
     return data
 
