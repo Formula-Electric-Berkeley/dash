@@ -51,6 +51,11 @@
                 text: 'TIME',
             },
             zeroline: false,
+        },
+        legend: {
+            x: 1,
+            xanchor: 'right',
+            y: 1
         }
     }
 
@@ -77,36 +82,11 @@
             }).then(data => {
                 graphData.push({
                     x: data["timestamps"],
-                    y: data["data"]
+                    y: data["data"],
+                    name: data["name"],
                 })
+
                 Plotly.update(graphDiv, graphData, graphLayout)
-                // Plotly.newPlot(graphDiv, [{
-                //     x: data["timestamps"],
-                //     y: data["data"]
-                // }], {
-                //     font: {
-                //         family: 'Inter, sans-serif',
-                //         size: 16,
-                //         color: '#fff'
-                //     },
-                //     margin: { t: 0, r: 0 },
-                //     paper_bgcolor: "#000000",
-                //     plot_bgcolor: "#000000",
-                //     yaxis: {
-                //         title: {
-                //             text: 'VALUES',
-                //         },
-                //         zerolinecolor: "#fff",
-                //         gridcolor: "gray",
-                //         griddash: 'dot',
-                //     },
-                //     xaxis: {
-                //         title: {
-                //             text: 'TIME',
-                //         },
-                //         zeroline: false,
-                //     }
-                // });
             });
         }
     }
