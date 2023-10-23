@@ -20,6 +20,7 @@
                 class="ml-2 px-10 py-1 text-lg bg-yellow hover-shadow-yellow rounded-full text-black font-bold cursor-pointer">ADD
                 <i class="fa-solid fa-circle-plus ml-1 upload-icon"></i></button>
         </div>
+        <h1 id="graph"></h1>
     </div>
 </div>
 
@@ -45,7 +46,7 @@
             }).then(response => {
                 return response.json();
             }).then(data => {
-                console.log(data)
+                document.getElementById("graph").innerHTML = JSON.stringify(data)
             });
         }
     }
