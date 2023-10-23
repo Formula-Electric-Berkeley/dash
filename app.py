@@ -102,7 +102,6 @@ def storage():
 
     return render_template(
         "storage.html",
-        # all_run_data=db.get_all_run_data(),
         data_headers=db.dash_headers_collection.find(),
         storage_size=round(db.dash_db.command("dbstats")["dataSize"] / 1e6, 1),
         storage_size_percent=round(
