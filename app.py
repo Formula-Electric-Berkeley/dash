@@ -19,16 +19,26 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/analysis", methods=["GET", "POST"])
+@app.route("/analysis")
 def analysis():
-    if request.method == "POST":
-        print(request)
-    
     return render_template(
         "analysis.html",
         all_run_data_json=loads(dumps(db.get_all_run_data())),
         all_run_data=db.get_all_run_data(),
     )
+
+
+@app.route("/graph", methods=["POST"])
+def graph():
+    source_id = request.json["source"]
+    device = request.json["device"]
+    parameter = request.json["parameter"]
+
+    source_document = db.run_data_collection.find_one({"_id": ObjectId(source_id)})
+
+    data = source_document["param_data"][parameter]
+
+    return data
 
 
 @app.route("/storage", methods=["GET", "POST"])
