@@ -33,12 +33,13 @@ def graph():
     device = request.json["device"]
     parameter = request.json["parameter"]
 
-    source_document = db.run_data_collection.find_one({"_id": ObjectId(source_id)})
+    source_document = db.dash_data_collection.find_one({"_id": ObjectId(source_id)})
 
-    data = source_document["param_data"][parameter]
-    data["name"] = f"{source_document['name']} {device} {parameter}"
+    graph_data = {"timestamps": source_document["timestamps"], "data": source_document[parameter]}
+    source_name = source_document["name"]
+    graph_data["name"] = f"{source_name} {device} {parameter}"
 
-    return data
+    return graph_data
 
 
 @app.route("/storage", methods=["GET", "POST"])
