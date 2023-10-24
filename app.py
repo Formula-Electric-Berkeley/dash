@@ -91,6 +91,12 @@ def storage():
                             / 1e6,
                             1,
                         ),
+                        "devices": db.dash_data_collection.find_one(
+                            {"_id": insert_header_result.inserted_id}
+                        )["devices"],
+                        "parameters": db.dash_data_collection.find_one(
+                            {"_id": insert_header_result.inserted_id}
+                        )["parameters"],
                     },
                 },
             )
