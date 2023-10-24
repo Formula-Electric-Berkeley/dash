@@ -99,6 +99,7 @@ def parse_csv(filepath):
         elif col == "DeviceName":
             data["devices"] = list(set(df[col].to_numpy()))
         else:
+            data["parameters"].append(col)
             data[col] = list(df[col].to_numpy())
 
     return data
