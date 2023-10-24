@@ -95,11 +95,11 @@ def parse_csv(filepath):
 
     for col in df:
         if col == "Time":
-            data["timestamps"] = list(df[col].to_numpy())
+            data["timestamps"] = df[col].to_list()
         elif col == "DeviceName":
-            data["devices"] = list(set(df[col].to_numpy()))
+            data["devices"] = list(set(df[col].to_list()))
         else:
             data["parameters"].append(col)
-            data[col] = list(df[col].to_numpy())
+            data[str(col)] = df[col].to_list()
 
     return data
