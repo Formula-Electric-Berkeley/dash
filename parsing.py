@@ -1,4 +1,3 @@
-# imports
 import pandas as pd
 import csv
 
@@ -14,17 +13,21 @@ def parse_csv(filepath):
         param = row["Message"]
         data_values = [row["Timestamps"], row["Data"]]
 
+        if param not in data["params"]: 
+            data["params"].append(param)
+
         if device not in data["devices"]:
             data["devices"].append(device)
 
-        if param not in data["params"]:
-            data["params"].append(param)
+        if device not in data["param_data"]:
+            data["param_data"][device] = {}
 
-        if param not in data["param_data"]:
-            data["param_data"][param] = {"timestamps": [], "data": []}
+        if param not in data["param_data"][device]:
+            data["param_data"][device][param] = {"timestamps": [], "data": []}
 
-        data["param_data"][param]["timestamps"].append(data_values[0])
-        data["param_data"][param]["data"].append(data_values[1])
+        # add device subsection
+        data["param_data"][device][param]["timestamps"].append(data_values[0])
+        data["param_data"][device][param]["data"].append(data_values[1])
 
     # just for easy viewing
     # output = json.dumps(data, indent=2)
@@ -48,13 +51,14 @@ def dict_to_csv(data, output_file):
     
     # loop through data dictionary and create row
     for device in devices:
-        for param in params:
-            if param in param_data:
-                timestamps = param_data[param]['timestamps']
-                data_values = param_data[param]['data']
-                for i in range(len(timestamps)):
-                    row = [timestamps[i], device, param, data_values[i]]
-                    csv_data.append(row)
+        if device in param_data:
+            for param in params:
+                if param in param_data[device]:
+                    timestamps = param_data[device][param]['timestamps']
+                    data_values = param_data[device][param]['data']
+                    for i in range(len(timestamps)):
+                        row = [timestamps[i], device, param, data_values[i]]
+                        csv_data.append(row)
     
     # write to csv file
     with open(output_file, 'w', newline='') as csv_file:
@@ -62,25 +66,34 @@ def dict_to_csv(data, output_file):
         writer.writerows(csv_data)
 
 
-"""example test case for creating csv
-data = {
-    "devices": ["BMS"],
-    "params": ["BMS_TEMPERATURE", "BMS_VOLTAGE", "BMS_SOMETHING"],
-    "param_data": {
-        "BMS_TEMPERATURE": {
-                "timestamps": [0.0, 1.0, 2.0],
-                "data": [4.0, 5.0, 6.0]
-        },
-        "BMS_VOLTAGE": {
-                "timestamps": [0.0, 1.0, 2.0],
-                "data": [600.0, 550.0, 500.0]
-        },
-        "BMS_SOMETHING": {
-                "timestamps": [0.0, 1.0, 2.0],
-                "data": [200.0, 250.0, 300.0]
-        }
-    }
-}
-output_file = 'output.csv' 
-dict_to_csv(data, output_file) # output file should now have newly updated csv
-"""
+# CAN refactor
+
+def parse_can(filepath, output_file):
+
+    df = pd.read_csv(filepath) 
+    # delete first 6 columns (torque command, speed command)
+    df = df.iloc[:, 6:]
+    
+    # output dataframe
+    output_df = pd.DataFrame()
+    
+    # (there is a blank column between each time data pair)
+    time_column_indices = list(range(0, len(df.columns), 3))
+    
+    # iterate over each time and look at respective data (next column over)
+    for time_col_index in time_column_indices:
+        time_col = df.columns[time_col_index] # time column
+        data_col = df.columns[time_col_index + 1] # data column
+    
+        # new dataframe for just the time and col
+        pair_df = df[[time_col, data_col]]
+        pair_df.columns = ['Timestamps', data_col] # name of column
+    
+        pair_df.set_index('Timestamps', inplace=True) # index = Timestamp
+        pair_df = pair_df.groupby('Timestamps').first() # aggregate times and data points that have entry for time
+    
+        output_df = pd.concat([output_df, pair_df], axis=1) # 
+    # sort ascending order by time
+    output_df = output_df.sort_index()
+    # output file
+    output_df.to_csv(output_file)
