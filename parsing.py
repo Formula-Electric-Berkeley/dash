@@ -71,8 +71,6 @@ def dict_to_csv(data, output_file):
 def parse_can(filepath, output_file):
 
     df = pd.read_csv(filepath) 
-    # delete first 6 columns (torque command, speed command)
-    df = df.iloc[:, 6:]
     
     # output dataframe
     output_df = pd.DataFrame()
