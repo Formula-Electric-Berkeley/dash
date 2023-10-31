@@ -68,30 +68,44 @@ def dict_to_csv(data, output_file):
 
 # CAN refactor
 
-def parse_can(filepath, output_file):
-
-    df = pd.read_csv(filepath) 
+def parse_can(filepath, output_file1, output_file2):
     
-    # output dataframe
-    output_df = pd.DataFrame()
+    df = pd.read_csv(filepath)
+    
+    # output dataframes
+    output_df1 = pd.DataFrame()
+    output_df2 = pd.DataFrame()
     
     # (there is a blank column between each time data pair)
     time_column_indices = list(range(0, len(df.columns), 3))
     
-    # iterate over each time and look at respective data (next column over)
-    for time_col_index in time_column_indices:
+    for i, time_col_index in enumerate(time_column_indices):
         time_col = df.columns[time_col_index] # time column
         data_col = df.columns[time_col_index + 1] # data column
-    
+
         # new dataframe for just the time and col
         pair_df = df[[time_col, data_col]]
         pair_df.columns = ['Timestamps', data_col] # name of column
     
         pair_df.set_index('Timestamps', inplace=True) # index = Timestamp
         pair_df = pair_df.groupby('Timestamps').first() # aggregate times and data points that have entry for time
+        
+        # Determine fill value based on column name
+        fill_value = -1 if ("torque_command" in data_col or "speed_command" in data_col) else 0
+
+        # Fill any empty cells with the last recorded value, and if none exists, fill with determined value
+        pair_df = pair_df.ffill().fillna(fill_value)
     
-        output_df = pd.concat([output_df, pair_df], axis=1) # 
-    # sort ascending order by time
-    output_df = output_df.sort_index()
-    # output file
-    output_df.to_csv(output_file)
+        # Alternate between output_df1 and output_df2
+        if i % 2 == 0:
+            output_df1 = pd.concat([output_df1, pair_df], axis=1)
+        else:
+            output_df2 = pd.concat([output_df2, pair_df], axis=1)
+
+    # sort ascending order by time and fill the empty cells for the final dataframes
+    output_df1 = output_df1.sort_index().ffill().fillna({col: -1 if ("torque_command" in col or "speed_command" in col) else 0 for col in output_df1.columns})
+    output_df2 = output_df2.sort_index().ffill().fillna({col: -1 if ("torque_command" in col or "speed_command" in col) else 0 for col in output_df2.columns})
+
+    # output to separate files
+    output_df1.to_csv(output_file1)
+    output_df2.to_csv(output_file2)
