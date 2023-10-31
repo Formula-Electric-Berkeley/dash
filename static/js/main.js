@@ -14,10 +14,12 @@ window.onclick = function (event) {
 }
 
 function delete_document(id) {
-    fetch('./delete_document/' + id, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    }).then(location.reload());
+    if (confirm("Are you sure you want to delete this data?\nThis action cannot be undone.")) {
+        fetch('./delete_document/' + id, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(location.reload());
+    }
 }

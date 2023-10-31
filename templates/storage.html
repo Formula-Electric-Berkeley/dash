@@ -22,6 +22,7 @@
     <tr>
       <th class="text-left text-2xl">TITLE <i class="fa-solid fa-thumbtack ml-2 table-heading-icon"></i></th>
       <th class="text-left text-2xl">FILENAME <i class="fa-solid fa-file ml-2 table-heading-icon"></i></th>
+      <th class="text-center text-2xl">SIZE <i class="fa-solid fa-database ml-2 table-heading-icon"></i></th>
       <th class="text-right text-2xl">UPLOAD DATE <i class="fa-solid fa-calendar ml-2 table-heading-icon"></i>
       </th>
     </tr>
@@ -34,6 +35,9 @@
         <p class="my-3"><i class="fa-solid fa-download mr-1 download-icon"></i>
           <code>{{ run["filename"] }}</code>
         </p>
+      </td>
+      <td class="text-xl border-solid border-2 border-white border-l-0 border-r-0 text-center">
+        <p class="my-3">{{ get_document_size(run) }} MB</p>
       </td>
       <td class="text-xl border-solid border-2 border-white border-l-0 text-right italic">
         <p class="m-3">{{ run["date"] }}<a class="hover:cursor-pointer" onclick="delete_document('{{ run['_id'] }}')"><i
@@ -54,7 +58,7 @@
         class="relative transform overflow-hidden rounded-2xl bg-black text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
         <div class="bg-black p-8 text-center">
           <h1 class="text-3xl">UPLOAD DATA</h1>
-          <form method=post enctype=multipart/form-data action="/storage">
+          <form method=post enctype=multipart/form-data action="./storage">
             <input
               class="w-full my-6 px-4 py-2 rounded-full text-black outline-none bg-gray-200 placeholder:text-gray-500"
               type=text name=title placeholder="Title (required)">

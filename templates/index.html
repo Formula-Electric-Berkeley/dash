@@ -1,6 +1,29 @@
 {%extends "base.html" %}
+
 {%block content%}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.globe.min.js"></script>
 
-<h1>Home</h1>
+<div id="globeDiv" class="w-full z-50"></div>
+<div class="bottom-80 ml-36">
+    <h1 class="text-4xl font-bold">Data Analysis & Storage Hub</h1>
+    <h1 class="text-2xl"><a href="https://ev.berkeley.edu/">Formula Electric at Berkeley</a></h1>
+</div>
 
+<script>
+    VANTA.GLOBE({
+        el: "body",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.00,
+        minWidth: 200.00,
+        scale: 1.00,
+        scaleMobile: 1.00,
+        color: 0xfbb414,
+        color2: 0x1e66ff,
+        size: 0.90,
+        backgroundColor: 0x0
+    })
+</script>
 {% endblock %}
