@@ -70,42 +70,54 @@ def dict_to_csv(data, output_file):
 
 def parse_can(filepath, output_file1, output_file2):
     
+    # relevant columns
+    columns_to_keep = [
+        "IVT-mod_extended_31082015::IVT_Msg_Result_U1::IVT_Result_U1[mV]",
+        "IVT-mod_extended_31082015::IVT_Msg_Result_I::IVT_Result_I[mA]",
+        "20170102 RMS PM CAN DB::M192_Command_Message::Torque_Command[Nm]",
+        "20170102 RMS PM CAN DB::M173_Modulation_And_Flux_Info::D2_Flux_Weakening_Output[A]",
+        "20170102 RMS PM CAN DB::M173_Modulation_And_Flux_Info::D3_Id_Command[A]",
+        "20170102 RMS PM CAN DB::M173_Modulation_And_Flux_Info::D4_Iq_Command[A]",
+        "20170102 RMS PM CAN DB::M172_Torque_And_Timer_Info::D1_Commanded_Torque[Nm]",
+        "20170102 RMS PM CAN DB::M172_Torque_And_Timer_Info::D2_Torque_Feedback[Nm]",
+        "20170102 RMS PM CAN DB::M168_Flux_ID_IQ_Info::D3_Id[A]",
+        "20170102 RMS PM CAN DB::M168_Flux_ID_IQ_Info::D4_Iq[A]",
+        "20170102 RMS PM CAN DB::M167_Voltage_Info::D1_DC_Bus_Voltage[V]",
+        "20170102 RMS PM CAN DB::M167_Voltage_Info::D2_Output_Voltage[V]",
+        "20170102 RMS PM CAN DB::M167_Voltage_Info::D3_VAB_Vd_Voltage[V]",
+        "20170102 RMS PM CAN DB::M167_Voltage_Info::D4_VBC_Vq_Voltage[V]",
+        "20170102 RMS PM CAN DB::M166_Current_Info::D4_DC_Bus_Current[A]",
+        "20170102 RMS PM CAN DB::M165_Motor_Position_Info::D2_Motor_Speed[rpm]",
+        "20170102 RMS PM CAN DB::M162_Temperature_Set_3::D4_Torque_Shudder[Nm]"
+    ]
+    
     df = pd.read_csv(filepath)
     
-    # output dataframes
     output_df1 = pd.DataFrame()
     output_df2 = pd.DataFrame()
     
-    # (there is a blank column between each time data pair)
-    time_column_indices = list(range(0, len(df.columns), 3))
+    time_column_indices = [i for i in range(0, len(df.columns), 3) if df.columns[i+1] in columns_to_keep]
     
     for i, time_col_index in enumerate(time_column_indices):
-        time_col = df.columns[time_col_index] # time column
-        data_col = df.columns[time_col_index + 1] # data column
+        time_col = df.columns[time_col_index]  # time
+        data_col = df.columns[time_col_index + 1]  # data
 
-        # new dataframe for just the time and col
-        pair_df = df[[time_col, data_col]]
-        pair_df.columns = ['Timestamps', data_col] # name of column
-    
-        pair_df.set_index('Timestamps', inplace=True) # index = Timestamp
-        pair_df = pair_df.groupby('Timestamps').first() # aggregate times and data points that have entry for time
+        pair_df = df[[time_col, data_col]].copy()
+        pair_df.columns = ['Timestamps', data_col]  
         
-        # Determine fill value based on column name
-        fill_value = -1 if ("torque_command" in data_col or "speed_command" in data_col) else 0
-
-        # Fill any empty cells with the last recorded value, and if none exists, fill with determined value
-        pair_df = pair_df.ffill().fillna(fill_value)
+        pair_df.set_index('Timestamps', inplace=True)
+        pair_df = pair_df.groupby('Timestamps').first()  # aggregate
     
-        # Alternate between output_df1 and output_df2
+        fill_value = -1 if ("torque_command" in data_col or "speed_command" in data_col) else 0
+        pair_df = pair_df.ffill().fillna(fill_value)
+        
         if i % 2 == 0:
             output_df1 = pd.concat([output_df1, pair_df], axis=1)
         else:
             output_df2 = pd.concat([output_df2, pair_df], axis=1)
 
-    # sort ascending order by time and fill the empty cells for the final dataframes
     output_df1 = output_df1.sort_index().ffill().fillna({col: -1 if ("torque_command" in col or "speed_command" in col) else 0 for col in output_df1.columns})
     output_df2 = output_df2.sort_index().ffill().fillna({col: -1 if ("torque_command" in col or "speed_command" in col) else 0 for col in output_df2.columns})
-
-    # output to separate files
+    
     output_df1.to_csv(output_file1)
     output_df2.to_csv(output_file2)
