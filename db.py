@@ -13,3 +13,28 @@ dash_headers_collection = dash_db.headers
 def get_all_run_data():
     """Returns all run data documents in run_data collection"""
     return None
+
+
+def get_all_run_data():
+    """Returns all run data documents in run_data collection"""
+    return None
+
+
+def get_all_run_data():
+    """Returns all run data documents in run_data collection"""
+    return None
+
+
+def get_all_run_data():
+    """Returns all run data documents in run_data collection"""
+    return None
+
+
+def get_all_run_data():
+    """Returns all run data documents in run_data collection"""
+    return None
+
+
+def get_all_run_data():
+    """Returns all run data documents in run_data collection"""
+    return None
