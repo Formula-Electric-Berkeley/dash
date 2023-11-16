@@ -7,10 +7,12 @@ from bson.json_util import dumps, loads
 from flask import Flask, flash, redirect, render_template, request, url_for
 from werkzeug.utils import secure_filename
 from bson.objectid import ObjectId
+from flask_cors import CORS, cross_origin
 
 ALLOWED_EXTENSIONS = {"csv"}
 
 app = Flask(__name__)
+CORS(app, expose_headers='Authorization', support_credentials=True)
 app.config["UPLOAD_FOLDER"] = "./uploads/"
 
 
@@ -34,6 +36,28 @@ def graph():
     graph_data["name"] = f"{source_name} {device} {parameter}"
 
     return graph_data
+
+
+@app.route("/upload", methods=["GET", "POST", "OPTIONS"])
+@cross_origin(supports_credentials=True)
+def upload():
+    if request.method == "POST":
+        if "file" not in request.files:
+            flash("No file part")
+            return redirect(request.url)
+        file = request.files["file"]
+        print("L:ASDKFH:LSDHKG:LDKSJG", file)
+
+        if file.filename == "":
+            flash("No selected file")
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+
+            file.save(filepath)
+
+        return "SUCCESS"
 
 
 @app.route("/storage", methods=["GET", "POST"])
