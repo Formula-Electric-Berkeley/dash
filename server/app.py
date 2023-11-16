@@ -25,7 +25,6 @@ def upload():
             flash("No file part")
             return redirect(request.url)
         file = request.files["file"]
-        print("L:ASDKFH:LSDHKG:LDKSJG", file)
 
         if file.filename == "":
             flash("No selected file")

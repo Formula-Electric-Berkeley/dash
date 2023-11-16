@@ -18,8 +18,6 @@ def get_all_rows():
 
 
 def add_file(filename, size, uploadDate):
-    print(filename, size, uploadDate)
-    print(f"INSERT INTO files VALUES ({filename}, {size}, {uploadDate})")
     cursor.execute(
         f"INSERT INTO files VALUES ('{filename}', {size}, '{uploadDate}')")
     connection.commit()
