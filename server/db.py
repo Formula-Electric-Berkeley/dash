@@ -1,40 +1,30 @@
-import os
-from flask_pymongo import MongoClient
-from dotenv import load_dotenv
+import sqlite3
 
-load_dotenv()
+# connection = sqlite3.connect(":memory:")
+connection = sqlite3.connect("database.db", check_same_thread=False)
 
-CONNECTION_STRING = os.getenv("ATLAS_URI")
-dash_db = MongoClient(CONNECTION_STRING)["dash_db"]
-dash_data_collection = dash_db.data
-dash_headers_collection = dash_db.headers
+cursor = connection.cursor()
 
+# cursor.execute(
+#     "CREATE TABLE files (filename TEXT, size INTEGER, uploadDate TEXT)")
 
-def get_all_run_data():
-    """Returns all run data documents in run_data collection"""
-    return None
+# cursor.execute("INSERT INTO files VALUES ('TEST.csv', 10, '99/99/2099')")
+# cursor.execute("INSERT INTO files VALUES ('TEST.csv', 10, '99/99/2099')")
 
 
-def get_all_run_data():
-    """Returns all run data documents in run_data collection"""
-    return None
+def get_all_rows():
+    return cursor.execute(
+        "SELECT filename, size, uploadDate FROM files").fetchall()
 
 
-def get_all_run_data():
-    """Returns all run data documents in run_data collection"""
-    return None
+def add_file(filename, size, uploadDate):
+    print(filename, size, uploadDate)
+    print(f"INSERT INTO files VALUES ({filename}, {size}, {uploadDate})")
+    cursor.execute(
+        f"INSERT INTO files VALUES ('{filename}', {size}, '{uploadDate}')")
+    connection.commit()
+    connection.close()
 
 
-def get_all_run_data():
-    """Returns all run data documents in run_data collection"""
-    return None
-
-
-def get_all_run_data():
-    """Returns all run data documents in run_data collection"""
-    return None
-
-
-def get_all_run_data():
-    """Returns all run data documents in run_data collection"""
-    return None
+def get_num_changes():
+    return connection.total_changes

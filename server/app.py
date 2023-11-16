@@ -1,4 +1,6 @@
 import os
+import db
+import datetime
 from flask import Flask, flash, redirect, render_template, request
 from werkzeug.utils import secure_filename
 from flask_cors import CORS, cross_origin
@@ -33,6 +35,9 @@ def upload():
             filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
 
             file.save(filepath)
+
+            db.add_file(filename, os.stat(filepath).st_size /
+                        (1024 * 1024), datetime.date.today().strftime("%x"))
 
         return "SUCCESS"
 
