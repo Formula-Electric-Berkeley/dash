@@ -20,6 +20,8 @@ const Storage = () => {
             body: data,
         }).then((response) => {
             console.log(response)
+        }).catch((error) => {
+            window.alert("Error uploading file: ", error);
         });
     }
 
