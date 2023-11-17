@@ -1,6 +1,7 @@
 import os
 import psycopg2
 import uuid
+import pandas as pd
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -15,15 +16,23 @@ conn.commit()
 
 
 def add_file(filename, filepath, size, uploadDate):
-    unique_id = uuid.uuid4().hex[:8]
+    unique_id = "dashdata" + uuid.uuid4().hex[:8]
 
     cursor.execute(
         f"INSERT INTO files (id, filename, size, uploadDate) VALUES ('{unique_id}', '{filename}', {size}, '{uploadDate}')")
 
     conn.commit()
 
+    df = pd.read_csv(filepath)
+    df_columns = list(df.columns)
+    table_str = ""
+    for i in df_columns:
+        column_name = ''.join(char for char in i if char.isalnum())
+        table_str += "col" + column_name + " STRING, "
+    table_str = table_str[:-2]
+
     cursor.execute(
-        f"CREATE TABLE {unique_id} (a INT, b STRING, c FLOAT)")
+        f"CREATE TABLE {unique_id} ({table_str})")
 
     conn.commit()
 
