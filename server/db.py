@@ -1,5 +1,6 @@
 import os
 import psycopg2
+import uuid
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -7,23 +8,22 @@ load_dotenv()
 CONNECTION_STRING = os.getenv("DATABASE_URL")
 conn = psycopg2.connect(CONNECTION_STRING)
 
-# with conn.cursor() as cur:
-#     cur.execute("SELECT now()")
-#     res = cur.fetchall()
-#     conn.commit()
-#     print(res)
-
 cursor = conn.cursor()
 cursor.execute(
-    "CREATE TABLE IF NOT EXISTS files (id INT PRIMARY KEY, filename STRING, size INT, uploadDate STRING)")
+    f"CREATE TABLE IF NOT EXISTS files (id STRING PRIMARY KEY, filename STRING, size FLOAT, uploadDate STRING)")
 conn.commit()
 
-cursor.execute(
-    "INSERT INTO files (id, filename, size, uploadDate) VALUES (2, 'test', 999, '99/99/2099')")
-conn.commit()
+
+def add_file(filename, filepath, size, uploadDate):
+    unique_id = uuid.uuid4().hex[:8]
+
+    cursor.execute(
+        f"INSERT INTO files (id, filename, size, uploadDate) VALUES ('{unique_id}', '{filename}', {size}, '{uploadDate}')")
+    conn.commit()
+
 
 cursor.execute("SELECT * FROM files")
 rows = cursor.fetchall()
 print(rows)
-cursor.close()
-conn.close()
+# cursor.close()
+# conn.close()
