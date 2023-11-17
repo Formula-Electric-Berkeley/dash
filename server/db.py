@@ -19,6 +19,12 @@ def add_file(filename, filepath, size, uploadDate):
 
     cursor.execute(
         f"INSERT INTO files (id, filename, size, uploadDate) VALUES ('{unique_id}', '{filename}', {size}, '{uploadDate}')")
+
+    conn.commit()
+
+    cursor.execute(
+        f"CREATE TABLE {unique_id} (a INT, b STRING, c FLOAT)")
+
     conn.commit()
 
 
