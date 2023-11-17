@@ -1,28 +1,29 @@
-import sqlite3
+import os
+import psycopg2
+from dotenv import load_dotenv
 
-# connection = sqlite3.connect(":memory:")
-connection = sqlite3.connect("database.db", check_same_thread=False)
+load_dotenv()
 
-cursor = connection.cursor()
+CONNECTION_STRING = os.getenv("DATABASE_URL")
+conn = psycopg2.connect(CONNECTION_STRING)
 
-# cursor.execute(
-#     "CREATE TABLE files (filename TEXT, size INTEGER, uploadDate TEXT)")
+# with conn.cursor() as cur:
+#     cur.execute("SELECT now()")
+#     res = cur.fetchall()
+#     conn.commit()
+#     print(res)
 
-# cursor.execute("INSERT INTO files VALUES ('TEST.csv', 10, '99/99/2099')")
-# cursor.execute("INSERT INTO files VALUES ('TEST.csv', 10, '99/99/2099')")
+cursor = conn.cursor()
+cursor.execute(
+    "CREATE TABLE IF NOT EXISTS files (id INT PRIMARY KEY, filename STRING, size INT, uploadDate STRING)")
+conn.commit()
 
+cursor.execute(
+    "INSERT INTO files (id, filename, size, uploadDate) VALUES (2, 'test', 999, '99/99/2099')")
+conn.commit()
 
-def get_all_rows():
-    return cursor.execute(
-        "SELECT filename, size, uploadDate FROM files").fetchall()
-
-
-def add_file(filename, size, uploadDate):
-    cursor.execute(
-        f"INSERT INTO files VALUES ('{filename}', {size}, '{uploadDate}')")
-    connection.commit()
-    connection.close()
-
-
-def get_num_changes():
-    return connection.total_changes
+cursor.execute("SELECT * FROM files")
+rows = cursor.fetchall()
+print(rows)
+cursor.close()
+conn.close()
