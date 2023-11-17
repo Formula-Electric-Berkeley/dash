@@ -35,7 +35,7 @@ def upload():
 
             file.save(filepath)
 
-            db.add_file(filename, os.stat(filepath).st_size /
+            db.add_file(filename, filepath, os.stat(filepath).st_size /
                         (1024 * 1024), datetime.date.today().strftime("%x"))
 
         return "SUCCESS"
