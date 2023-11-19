@@ -2,6 +2,7 @@ import React from 'react';
 import { Layout, Model } from 'flexlayout-react';
 import 'flexlayout-react/style/dark.css';
 import Storage from '../Storage/Storage';
+import View from '../View/View';
 
 var json = {
 	"global": {
@@ -43,7 +44,7 @@ var json = {
 								"type": "tab",
 								"id": "#895ac56a-807e-4bf7-9922-034abd746ca8",
 								"name": "VIEW",
-								"component": "grid",
+								"component": "View",
 							}
 						]
 					}
@@ -79,6 +80,10 @@ const Landing = () => {
 
         if (component === "Storage") {
             return <Storage/>;
+        }
+
+        if (component === "View") {
+            return <View/>;
         }
     }
 
