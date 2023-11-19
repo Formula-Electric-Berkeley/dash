@@ -48,8 +48,11 @@ def add_file(filename, filepath, size, uploadDate):
     conn.commit()
 
 
+def get_all_file_info():
+    cursor.execute("SELECT * FROM files")
+    return cursor.fetchall()
+
+
 cursor.execute("SELECT * FROM files")
 rows = cursor.fetchall()
 print(rows)
-# cursor.close()
-# conn.close()

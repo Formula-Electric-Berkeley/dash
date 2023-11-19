@@ -41,6 +41,11 @@ def upload():
         return "SUCCESS"
 
 
+@app.route("/get_files_info", methods=["GET"])
+def get_files_info():
+    return db.get_all_file_info()
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template("404.html")
