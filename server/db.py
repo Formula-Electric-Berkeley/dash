@@ -9,13 +9,15 @@ load_dotenv()
 CONNECTION_STRING = os.getenv("DATABASE_URL")
 conn = psycopg2.connect(CONNECTION_STRING)
 
-cursor = conn.cursor()
-cursor.execute(
+cursor_main = conn.cursor()
+cursor_main.execute(
     f"CREATE TABLE IF NOT EXISTS files (id STRING PRIMARY KEY, filename STRING, size FLOAT, uploadDate STRING)")
 conn.commit()
 
 
 def add_file(filename, filepath, size, uploadDate):
+    cursor = conn.cursor()
+
     unique_id = "dashdata" + uuid.uuid4().hex[:8]
 
     cursor.execute(
@@ -41,6 +43,11 @@ def add_file(filename, filepath, size, uploadDate):
         row_list = list(row)[1:]
         row_str = ', '.join(f"'{x}'" for x in row_list)
 
+        print(f'''
+               INSERT INTO {unique_id} ({insert_str})
+               VALUES ({row_str})
+               ''')
+
         cursor.execute(f'''
                INSERT INTO {unique_id} ({insert_str})
                VALUES ({row_str})
@@ -49,10 +56,27 @@ def add_file(filename, filepath, size, uploadDate):
 
 
 def get_all_file_info():
+    cursor = conn.cursor()
     cursor.execute("SELECT * FROM files")
     return cursor.fetchall()
 
 
-cursor.execute("SELECT * FROM files")
-rows = cursor.fetchall()
+def get_file_data_columns(file_id):
+    cursor = conn.cursor()
+    cursor.execute(f'''
+                    SELECT column_name
+                    FROM INFORMATION_SCHEMA.COLUMNS
+                    WHERE TABLE_NAME = '{file_id}';
+                   ''')
+    return cursor.fetchall()
+
+
+def get_file_data(file_id):
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT * FROM {file_id}")
+    return cursor.fetchall()
+
+
+cursor_main.execute("SELECT * FROM files")
+rows = cursor_main.fetchall()
 print(rows)
