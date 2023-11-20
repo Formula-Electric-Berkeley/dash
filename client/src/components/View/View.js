@@ -3,7 +3,7 @@ import DataTable from "./DataTable";
 
 const Storage = () => {
     return (
-        <div>
+        <div className="w-full h-full">
             <DataTable/>
         </div>
     );
