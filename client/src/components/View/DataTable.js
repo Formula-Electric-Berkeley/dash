@@ -72,8 +72,8 @@ const DataTable = () => {
     }
 
     return (
-        <div>
-            <DataGrid columns={displayColumns} rows={rows} onRowsChange={setRows} />
+        <div className='h-full'>
+            <DataGrid className='h-full' columns={displayColumns} rows={rows} onRowsChange={setRows} />
         </div>
     );
 };
