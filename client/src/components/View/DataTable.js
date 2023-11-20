@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import 'react-data-grid/lib/styles.css';
 import DataGrid from 'react-data-grid';
+import { CurrentDataContext } from '../../App';
 
 const DataTable = () => {
+    const { currentDataId, setCurrentDataId } = useContext(CurrentDataContext);
+
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [rows, setRows] = useState([]);
@@ -10,7 +13,7 @@ const DataTable = () => {
     const [displayColumns, setDisplayColumns] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:8000/get_file_data_columns?id=dashdataed579ee6", {
+        fetch("http://localhost:8000/get_file_data_columns?id=" + currentDataId, {
             method: "GET",
         })
             .then((response) => response.json())
@@ -31,7 +34,7 @@ const DataTable = () => {
     });
 
     useEffect(() => {
-        fetch("http://localhost:8000/get_file_data?id=dashdataed579ee6", {
+        fetch("http://localhost:8000/get_file_data?id=", + currentDataId, {
             method: "GET",
         })
             .then((response) => response.json())
@@ -58,6 +61,10 @@ const DataTable = () => {
     useEffect(() => {
         if (rows.length !== 0) { setLoading(false) }
     }, [rows])
+
+    if (currentDataId === null) {
+        return <p>Select data source</p>;
+    }
 
     if (loading) {
         return <p>Loading...</p>;
