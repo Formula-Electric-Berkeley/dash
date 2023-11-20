@@ -3,6 +3,7 @@ import { Layout, Model } from 'flexlayout-react';
 import 'flexlayout-react/style/dark.css';
 import Storage from '../Storage/Storage';
 import View from '../View/View';
+import Graph from '../Graph/Graph';
 
 var json = {
 	"global": {
@@ -59,7 +60,7 @@ var json = {
 						"type": "tab",
 						"id": "#f6f430ff-e235-4a8f-959d-d25a88be4368",
 						"name": "GRAPH",
-						"component": "grid"
+						"component": "Graph"
 					},
 				],
 				"active": true
@@ -74,16 +75,16 @@ const Landing = () => {
     const factory = (node) => {
         var component = node.getComponent();
 
-        if (component === "button") {
-            return <button>{node.getName()}</button>;
-        }
-
         if (component === "Storage") {
             return <Storage/>;
         }
 
         if (component === "View") {
             return <View/>;
+        }
+
+        if (component === "Graph") {
+            return <Graph/>;
         }
     }
 
