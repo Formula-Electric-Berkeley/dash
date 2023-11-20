@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { DataIdContext } from '../../App';
 import 'react-data-grid/lib/styles.css';
-import DataGrid from 'react-data-grid';
 import { AgGridReact } from "ag-grid-react";
 import 'ag-grid-community/styles/ag-grid.css';
 import "ag-grid-community/styles/ag-theme-alpine.css";
@@ -15,20 +14,6 @@ const DataTable = () => {
     const [rows, setRows] = useState([]);
     const [columns, setColumns] = useState([]);
     const [displayColumns, setDisplayColumns] = useState([]);
-
-    const [rowData] = useState([
-        { make: "Toyota", model: "Celica", price: 35000 },
-        { make: "Ford", model: "Mondeo", price: 32000 },
-        { make: "Porsche", model: "Boxter", price: 72000 }
-    ]);
-
-    const [columnDefs] = useState([
-        { field: "make" },
-        { field: "model" },
-        { field: "price" }
-    ]);
-
-
 
     useEffect(() => {
         fetch("http://localhost:8000/get_file_data_columns?id=" + dataId, {
@@ -88,7 +73,6 @@ const DataTable = () => {
         return <p>Error: {error.message}</p>;
     }
 
-    //<DataGrid className='h-full' columns={displayColumns} rows={rows} onRowsChange={setRows} />
     return (
         <div className="ag-theme-alpine-dark w-full h-full">
             <AgGridReact rowData={rows} columnDefs={displayColumns}></AgGridReact>
