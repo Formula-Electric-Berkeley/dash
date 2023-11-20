@@ -19,7 +19,6 @@ const DataTable = () => {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data)
                 let currColumns = []
                 for (const entry of data) {
                     let columnName = entry[0].substring(3);
@@ -33,7 +32,7 @@ const DataTable = () => {
                 console.log(error)
             });
 
-    });
+    }, []);
 
     useEffect(() => {
         fetch("http://localhost:8000/get_file_data?id=" + dataId, {
@@ -41,7 +40,6 @@ const DataTable = () => {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data)
                 let currRows = []
                 for (const row of data) {
                     let currHash = {}
