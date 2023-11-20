@@ -73,7 +73,7 @@ def get_file_data_columns(file_id):
 
 def get_file_data(file_id):
     cursor = conn.cursor()
-    cursor.execute(f"SELECT * FROM {file_id}")
+    cursor.execute(f"SELECT * FROM {file_id} LIMIT 500")
     return cursor.fetchall()
 
 
