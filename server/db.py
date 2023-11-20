@@ -77,6 +77,7 @@ def get_file_data(file_id):
     return cursor.fetchall()
 
 
-cursor_main.execute("SELECT * FROM files")
-rows = cursor_main.fetchall()
-print(rows)
+def get_column_data(file_id, column_name):
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT {column_name} FROM {file_id};")
+    return cursor.fetchall()

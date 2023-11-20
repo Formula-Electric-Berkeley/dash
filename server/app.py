@@ -56,6 +56,11 @@ def get_file_data():
     return db.get_file_data(request.args.get('id'))
 
 
+@app.route("/get_column_data", methods=["GET"])
+def get_column_data():
+    return db.get_column_data(request.args.get('id'), request.args.get('column'))
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template("404.html")

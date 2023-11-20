@@ -1,11 +1,48 @@
-import React from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import Plot from 'react-plotly.js';
+import { DataIdContext } from '../../App';
 
 const ScatterPlot = () => {
+    const dataId = useContext(DataIdContext);
+    const [xValues, setXValues] = useState([]);
+    const [yValues, setYValues] = useState([]);
+
+    useEffect(() => {
+        fetch("http://localhost:8000/get_column_data?column=coltimes27&id=" + dataId, {
+            method: "GET",
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                let currArray = []
+                for (const entry of data) {
+                    currArray.push(entry[0])
+                }
+                setXValues(currArray)
+            })
+            .catch((error) => {
+                console.log(error)
+            });
+
+        fetch("http://localhost:8000/get_column_data?column=col20170102rmspmcandbm192commandmessagetorquecommandnm&id=" + dataId, {
+            method: "GET",
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                let currArray = []
+                for (const entry of data) {
+                    currArray.push(entry[0])
+                }
+                setYValues(currArray)
+            })
+            .catch((error) => {
+                console.log(error)
+            });
+    }, []);
+
     let data = [
         {
-            x: [1, 2, 3],
-            y: [2, 6, 3],
+            x: xValues,
+            y: yValues,
             type: 'scatter',
             mode: 'markers',
         },
