@@ -9,19 +9,21 @@ load_dotenv()
 CONNECTION_STRING = os.getenv("DATABASE_URL")
 conn = psycopg2.connect(CONNECTION_STRING)
 
-cursor_main = conn.cursor()
-cursor_main.execute(
-    f"CREATE TABLE IF NOT EXISTS files (id STRING PRIMARY KEY, filename STRING, size FLOAT, uploadDate STRING)")
-conn.commit()
+
+def get_db_connection():
+    return psycopg2.connect(CONNECTION_STRING)
 
 
 def add_file(filename, filepath, size, uploadDate):
+    conn = get_db_connection()
     cursor = conn.cursor()
 
     unique_id = "dashdata" + uuid.uuid4().hex[:8]
 
-    cursor.execute(
-        f"INSERT INTO files (id, filename, size, uploadDate) VALUES ('{unique_id}', '{filename}', {size}, '{uploadDate}')")
+    cursor.execute(f'''
+                   INSERT INTO files (id, filename, size, uploadDate)
+                   VALUES ('{unique_id}', '{filename}', {size}, '{uploadDate}')
+                   ''')
     conn.commit()
 
     df = pd.read_csv(filepath)
@@ -52,32 +54,63 @@ def add_file(filename, filepath, size, uploadDate):
                INSERT INTO {unique_id} ({insert_str})
                VALUES ({row_str})
                ''')
+    cursor.close()
+    conn.close()
     conn.commit()
 
 
 def get_all_file_info():
+    conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM files")
-    return cursor.fetchall()
+    out = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return out
 
 
 def get_file_data_columns(file_id):
+    conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute(f'''
                     SELECT column_name
                     FROM INFORMATION_SCHEMA.COLUMNS
                     WHERE TABLE_NAME = '{file_id}';
                    ''')
-    return cursor.fetchall()
+    out = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return out
 
 
 def get_file_data(file_id):
+    conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute(f"SELECT * FROM {file_id} LIMIT 500")
-    return cursor.fetchall()
+    out = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return out
 
 
 def get_column_data(file_id, column_name):
+    conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute(f"SELECT {column_name} FROM {file_id};")
-    return cursor.fetchall()
+    out = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return out
+
+
+if __name__ == "__main__":
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('''
+                    CREATE TABLE IF NOT EXISTS files
+                    (id STRING PRIMARY KEY, filename STRING,
+                    size FLOAT, uploadDate STRING)
+                   ''')
+    conn.commit()
+    cursor.close()
+    conn.close()
