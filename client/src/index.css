@@ -19,3 +19,27 @@ body {
     color: white;
     font-family: 'Inter', sans-serif;
 }
+
+/* width & height */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: none;
+    border-radius: 99999px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--yellow);
+    border-radius: 99999px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #f8a100;
+}
+
