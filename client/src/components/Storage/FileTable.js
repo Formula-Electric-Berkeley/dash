@@ -48,8 +48,8 @@ const FileTable = () => {
     }
 
     return (
-        <div>
-            <DataGrid columns={columns} rows={rows} onRowsChange={setRows} />
+        <div className='h-full'>
+            <DataGrid className='h-full' columns={columns} rows={rows} onRowsChange={setRows} />
         </div>
     );
 };
