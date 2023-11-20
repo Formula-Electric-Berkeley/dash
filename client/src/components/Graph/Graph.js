@@ -1,9 +1,10 @@
 import React from 'react';
+import ScatterPlot from './ScatterPlot';
 
 const Graph = () => {
     return (
         <div>
-        GRAPH
+            <ScatterPlot/>
         </div>
     );
 };
