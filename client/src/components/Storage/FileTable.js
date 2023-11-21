@@ -49,9 +49,17 @@ const FileTable = () => {
         return <p>Error: {error.message}</p>;
     }
 
+    const defaultColDef = {
+        flex: 1,
+    };
+
     return (
         <div className="ag-theme-alpine-dark grow w-full">
-            <AgGridReact rowData={rows} columnDefs={columns}></AgGridReact>
+            <AgGridReact
+                defaultColDef={defaultColDef}
+                rowData={rows}
+                columnDefs={columns}>
+            </AgGridReact>
         </div>
     );
 };

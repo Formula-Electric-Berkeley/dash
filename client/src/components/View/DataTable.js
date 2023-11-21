@@ -75,7 +75,10 @@ const DataTable = () => {
 
     return (
         <div className="ag-theme-alpine-dark w-full h-full">
-            <AgGridReact rowData={rows} columnDefs={displayColumns}></AgGridReact>
+            <AgGridReact
+                rowData={rows}
+                columnDefs={displayColumns}>
+            </AgGridReact>
         </div>
     );
 };
