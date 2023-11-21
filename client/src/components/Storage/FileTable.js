@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import 'react-data-grid/lib/styles.css';
-import DataGrid from 'react-data-grid';
+import { AgGridReact } from "ag-grid-react";
+import 'ag-grid-community/styles/ag-grid.css';
+import "ag-grid-community/styles/ag-theme-alpine.css";
 
 const FileTable = () => {
     const [loading, setLoading] = useState(true);
@@ -8,9 +10,9 @@ const FileTable = () => {
     const [rows, setRows] = useState([]);
 
     const columns = [
-        { key: 'filename', name: 'Filename' },
-        { key: 'size', name: 'Size' },
-        { key: 'uploadDate', name: 'Upload Date' }
+        { field: 'filename' },
+        { field: 'size' },
+        { field: 'uploadDate' }
     ];
 
     useEffect(() => {
@@ -48,8 +50,8 @@ const FileTable = () => {
     }
 
     return (
-        <div className='h-full'>
-            <DataGrid className='h-full' columns={columns} rows={rows} onRowsChange={setRows} />
+        <div className="ag-theme-alpine-dark grow w-full">
+            <AgGridReact rowData={rows} columnDefs={columns}></AgGridReact>
         </div>
     );
 };

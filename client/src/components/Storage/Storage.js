@@ -4,7 +4,7 @@ import FileTable from "./FileTable";
 
 const Storage = () => {
     return (
-        <div>
+        <div className="h-full w-full flex flex-col">
             <UploadFile/>
             <FileTable/>
         </div>
