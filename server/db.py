@@ -45,11 +45,6 @@ def add_file(filename, filepath, size, uploadDate):
         row_list = list(row)[1:]
         row_str = ', '.join(f"'{x}'" for x in row_list)
 
-        print(f'''
-               INSERT INTO {unique_id} ({insert_str})
-               VALUES ({row_str})
-               ''')
-
         cursor.execute(f'''
                INSERT INTO {unique_id} ({insert_str})
                VALUES ({row_str})
