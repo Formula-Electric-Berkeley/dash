@@ -41,17 +41,21 @@ def add_file(filename, filepath, size, uploadDate):
         f"CREATE TABLE {unique_id} ({table_str})")
     conn.commit()
 
+    values_str = ""
+
     for row in df.itertuples():
         row_list = list(row)[1:]
         row_str = ', '.join(f"'{x}'" for x in row_list)
 
-        cursor.execute(f'''
-               INSERT INTO {unique_id} ({insert_str})
-               VALUES ({row_str})
-               ''')
+        values_str += f"({row_str}), "
+
+    values_str = values_str[:-2]
+
+    #print(f'''INSERT INTO {unique_id} ({insert_str}) VALUES {values_str}''')
+    cursor.execute(f'''INSERT INTO {unique_id} ({insert_str}) VALUES {values_str}''')
+    conn.commit()
     cursor.close()
     conn.close()
-    conn.commit()
 
 
 def get_all_file_info():
