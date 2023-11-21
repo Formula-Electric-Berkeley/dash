@@ -5,9 +5,8 @@ import { AgGridReact } from "ag-grid-react";
 import 'ag-grid-community/styles/ag-grid.css';
 import "ag-grid-community/styles/ag-theme-alpine.css";
 
-
 const DataTable = () => {
-    const dataId = useContext(DataIdContext);
+    const { dataId, setDataId } = useContext(DataIdContext);
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -34,7 +33,7 @@ const DataTable = () => {
                 console.log(error)
             });
 
-    }, []);
+    }, [dataId]);
 
     useEffect(() => {
         fetch("http://localhost:8000/get_file_data?id=" + dataId, {
@@ -59,7 +58,7 @@ const DataTable = () => {
                 setLoading(false);
                 console.log(error)
             });
-    }, [columns]);
+    }, [columns, dataId]);
 
     useEffect(() => {
         if (rows.length !== 0) { setLoading(false) }
@@ -77,7 +76,8 @@ const DataTable = () => {
         <div className="ag-theme-alpine-dark w-full h-full">
             <AgGridReact
                 rowData={rows}
-                columnDefs={displayColumns}>
+                columnDefs={displayColumns}
+            >
             </AgGridReact>
         </div>
     );

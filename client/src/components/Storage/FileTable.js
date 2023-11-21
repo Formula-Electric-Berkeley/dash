@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useCallback, useContext } from 'react';
+import { DataIdContext } from '../../App';
 import 'react-data-grid/lib/styles.css';
 import { AgGridReact } from "ag-grid-react";
 import 'ag-grid-community/styles/ag-grid.css';
 import "ag-grid-community/styles/ag-theme-alpine.css";
 
 const FileTable = () => {
+    const { dataId, setDataId } = useContext(DataIdContext);
+
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [rows, setRows] = useState([]);
@@ -12,8 +15,17 @@ const FileTable = () => {
     const columns = [
         { field: 'filename' },
         { field: 'size' },
-        { field: 'uploadDate' }
+        { field: 'uploadDate' },
+        { field: 'ID', hide: true }
     ];
+
+    const gridRef = useRef();
+
+    const onSelectionChanged = useCallback(() => {
+        const selectedRows = gridRef.current.api.getSelectedRows();
+        setDataId(selectedRows[0].ID)
+        console.log(dataId)
+    }, []);
 
     useEffect(() => {
         fetch("http://localhost:8000/get_files_info", {
@@ -28,7 +40,8 @@ const FileTable = () => {
                     currRows.push({
                         'filename': entry[1],
                         'size': parseFloat(entry[2].toFixed(2)),
-                        'uploadDate': entry[3]
+                        'uploadDate': entry[3],
+                        'ID': entry[0],
                     })
                 }
 
@@ -56,9 +69,13 @@ const FileTable = () => {
     return (
         <div className="ag-theme-alpine-dark grow w-full">
             <AgGridReact
+                ref={gridRef}
                 defaultColDef={defaultColDef}
                 rowData={rows}
-                columnDefs={columns}>
+                columnDefs={columns}
+                rowSelection={'single'}
+                onSelectionChanged={onSelectionChanged}
+            >
             </AgGridReact>
         </div>
     );

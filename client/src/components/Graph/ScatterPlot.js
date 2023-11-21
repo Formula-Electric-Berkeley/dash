@@ -3,7 +3,7 @@ import Plot from 'react-plotly.js';
 import { DataIdContext } from '../../App';
 
 const ScatterPlot = () => {
-    const dataId = useContext(DataIdContext);
+    const {dataId, setDataId} = useContext(DataIdContext);
     const [xValues, setXValues] = useState([]);
     const [yValues, setYValues] = useState([]);
 
@@ -37,7 +37,7 @@ const ScatterPlot = () => {
             .catch((error) => {
                 console.log(error)
             });
-    }, []);
+    }, [dataId]);
 
     let data = [
         {
