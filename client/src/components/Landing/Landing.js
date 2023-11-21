@@ -77,23 +77,24 @@ const Landing = () => {
     let nextGridIndex = 1;
 
     const onRenderTabSet = (node, renderValues) => {
-        renderValues.stickyButtons.push(
-            <img src="images/add.svg"
-                alt="Add"
-                key="Add button"
-                title="Add Tab (using onRenderTabSet callback, see Demo)"
-                style={{ width: "1.1em", height: "1.1em" }}
-                className="flexlayout__tab_toolbar_button"
-                onClick={() => onAddFromTabSetButton(node)}
-            />);
+        if (node._attributes.id === "#58616339-1440-4048-a048-114306773179") {
+            renderValues.stickyButtons.push(
+                <img src="images/add.svg"
+                    alt="Add"
+                    key="Add button"
+                    title="Add Tab (using onRenderTabSet callback, see Demo)"
+                    style={{ width: "1.1em", height: "1.1em" }}
+                    className="flexlayout__tab_toolbar_button"
+                    onClick={() => onAddFromTabSetButton(node)}
+                />);
+        }
     }
 
     const onAddFromTabSetButton = (node) => {
-        const addedTab = (layoutRef.current).addTabToTabSet(node.getId(), {
+        (layoutRef.current).addTabToTabSet(node.getId(), {
             component: "Graph",
             name: "GRAPH " + nextGridIndex++
         });
-        console.log("Added tab", addedTab);
     }
 
     const factory = (node) => {
