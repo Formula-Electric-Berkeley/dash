@@ -8,7 +8,7 @@ const ScatterPlot = () => {
     const [yValues, setYValues] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:8000/get_column_data?column=coltimes27&id=" + dataId, {
+        fetch("http://localhost:8000/get_column_data?column=coltime&id=" + dataId, {
             method: "GET",
         })
             .then((response) => response.json())
@@ -23,7 +23,7 @@ const ScatterPlot = () => {
                 console.log(error)
             });
 
-        fetch("http://localhost:8000/get_column_data?column=col20170102rmspmcandbm192commandmessagetorquecommandnm&id=" + dataId, {
+        fetch("http://localhost:8000/get_column_data?column=colgyroxs&id=" + dataId, {
             method: "GET",
         })
             .then((response) => response.json())
