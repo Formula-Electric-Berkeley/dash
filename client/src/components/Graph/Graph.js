@@ -1,11 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { DataIdContext } from '../../App';
 import './Graph.css';
 import Multiselect from 'multiselect-react-dropdown';
 import ScatterPlot from './ScatterPlot';
 
 const Graph = () => {
+    const { dataId, setDataId } = useContext(DataIdContext);
+
+    const [xAxisElements, setXAxisElements] = useState([]);
+    const [yAxisOptions, setYAxisOptions] = useState([]);
     const [inputs, setInputs] = useState({});
-    const [options, setOptions] = useState([{ name: 'Option 1', id: 1 }, { name: 'Option 2', id: 2 }]);
+
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        fetch("http://localhost:8000/get_file_data_columns?id=" + dataId, {
+            method: "GET",
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                let currXElements = []
+                let currYElements = []
+                for (const entry of data) {
+                    let columnName = entry[0].substring(3);
+                    currXElements.push(<option value={columnName}>{columnName}</option>)
+                    currYElements.push({name: columnName})
+                }
+                setXAxisElements(currXElements)
+                setYAxisOptions(currYElements)
+                setLoading(false);
+            })
+            .catch((error) => {
+                setError(error);
+                setLoading(false);
+                console.log(error)
+            });
+
+    }, [dataId]);
 
     const handleChange = (event) => {
         const name = event.target.name;
@@ -28,6 +60,14 @@ const Graph = () => {
         setInputs(values => ({ ...values, [name]: selectedList }))
     }
 
+    if (loading) {
+        return <p>Loading...</p>;
+    }
+
+    if (error) {
+        return <p>Error: {error.message}</p>;
+    }
+
     return (
         <div className='w-full h-full flex justify-center align-middle'>
             <div className='max-w-lg w-4/5 m-auto p-10 
@@ -45,13 +85,11 @@ const Graph = () => {
                         <select name='xAxis' onChange={handleChange}
                             className='w-full mb-5 py-1 px-2 rounded-lg outline-none'>
                             <option value="" disabled selected>Select X-Axis</option>
-                            <option value="scatter">Scatter Plot</option>
-                            <option value="line">Line Graph</option>
+                            {xAxisElements}
                         </select>
                         <Multiselect
-                            options={options}
+                            options={yAxisOptions}
                             className='mb-5 rounded-lg outline-none'
-                            //                             selectedValues={this.state.selectedValue} // Preselected value to persist in dropdown
                             onSelect={onSelect}
                             onRemove={onRemove}
                             placeholder='Select Y-Axis'
