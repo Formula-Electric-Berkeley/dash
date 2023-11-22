@@ -2,10 +2,11 @@ import React, { useEffect, useContext, useState } from 'react';
 import Plot from 'react-plotly.js';
 import { DataIdContext } from '../../App';
 
-const ScatterPlot = () => {
+const ScatterPlot = (xColumnName, yColumnArray) => {
     const {dataId, setDataId} = useContext(DataIdContext);
     const [xValues, setXValues] = useState([]);
     const [yValues, setYValues] = useState([]);
+    console.log(xColumnName, yColumnArray)
 
     useEffect(() => {
         fetch("http://localhost:8000/get_column_data?column=coltime&id=" + dataId, {
