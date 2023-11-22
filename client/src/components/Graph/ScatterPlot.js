@@ -6,9 +6,12 @@ const ScatterPlot = (props) => {
     const { dataId, setDataId } = useContext(DataIdContext);
     const [xValues, setXValues] = useState([]);
     const [yValues, setYValues] = useState([]);
+    const [yColumnNames, setYColumnNames] = useState([]);
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    const [dataTMP, setDataTMP] = useState([]);
 
     useEffect(() => {
         fetch("http://localhost:8000/get_column_data?column=col" + props.xColumnName + "&id=" + dataId, {
@@ -43,7 +46,44 @@ const ScatterPlot = (props) => {
                 setLoading(false);
                 console.log(error)
             });
-    }, [dataId]);
+    }, []);
+
+    useEffect(() => {
+        let yColumnNamesTmp = []
+        for (const name of props.yColumnArray) {
+            yColumnNamesTmp.push(name.name)
+        }
+
+        let allTraces = []
+        for (const yColumnName of yColumnNamesTmp) {
+            fetch("http://localhost:8000/get_column_data?column=col" + yColumnName + "&id=" + dataId, {
+                method: "GET",
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    let currArray = []
+                    for (const entry of data) {
+                        currArray.push(entry[0])
+                    }
+                    let currentTrace =
+                    {
+                        x: xValues,
+                        y: currArray,
+                        type: 'scatter',
+                        mode: 'markers',
+                    };
+                    allTraces.push(currentTrace)
+                    //console.log(currentTrace)
+                    // setDataTMP((dataTMP) => ([...dataTMP, currentFrame]))
+                })
+                .catch((error) => {
+                    console.log(error)
+                });
+        }
+        console.log(allTraces)
+        setDataTMP(allTraces)
+        console.log(dataTMP)
+    }, [xValues])
 
     let data = [
         {
