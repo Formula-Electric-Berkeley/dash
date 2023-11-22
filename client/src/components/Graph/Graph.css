@@ -1,0 +1,28 @@
+:root {
+    --yellow: #fbb414;
+    --blue: #1e478a;
+    --gray: #808080;
+}
+
+.multiselect-container {
+    background-color: white;
+    padding: 4px 8px 4px 8px;
+}
+
+.search-wrapper {
+    border: none !important;
+    padding: 0 !important;
+}
+
+.searchBox {
+    color: black;
+}
+
+.searchBox::placeholder {
+    color: black;
+}
+
+.highlightOption, .highlight, .highlightOption:hover, .highlight:hover, .multiSelectContainer li:hover, .chip {
+    background-color: var(--yellow) !important;
+    color: black !important;
+}
