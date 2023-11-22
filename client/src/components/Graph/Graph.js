@@ -48,8 +48,8 @@ const Graph = () => {
 
     const handleConfigureGraph = (event) => {
         event.preventDefault();
-        console.log("SUBMIT")
         setShowGraph(true);
+        console.log(inputs.xAxis)
     }
 
     const onSelect = (selectedList, selectedItem) => {

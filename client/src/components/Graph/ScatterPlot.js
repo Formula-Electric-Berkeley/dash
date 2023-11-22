@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from 'react';
 import Plot from 'react-plotly.js';
 import { DataIdContext } from '../../App';
 
-const ScatterPlot = (xColumnName, yColumnArray) => {
+const ScatterPlot = (props) => {
     const { dataId, setDataId } = useContext(DataIdContext);
     const [xValues, setXValues] = useState([]);
     const [yValues, setYValues] = useState([]);
@@ -10,10 +10,8 @@ const ScatterPlot = (xColumnName, yColumnArray) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    console.log(xColumnName, yColumnArray)
-
     useEffect(() => {
-        fetch("http://localhost:8000/get_column_data?column=coltime&id=" + dataId, {
+        fetch("http://localhost:8000/get_column_data?column=col" + props.xColumnName + "&id=" + dataId, {
             method: "GET",
         })
             .then((response) => response.json())
@@ -78,7 +76,7 @@ const ScatterPlot = (xColumnName, yColumnArray) => {
         },
         xaxis: {
             title: {
-                text: 'TIME',
+                text: props.xColumnName,
             },
             zeroline: false,
         },
