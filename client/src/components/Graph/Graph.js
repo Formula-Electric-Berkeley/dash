@@ -84,7 +84,6 @@ const Graph = () => {
                                     className='w-full my-5 py-1 px-2 rounded-lg outline-none'>
                                     <option value="" disabled selected>Select Graph Type</option>
                                     <option value="scatter">Scatter Plot</option>
-                                    <option value="line">Line Graph</option>
                                 </select>
                                 <select name='xAxis' onChange={handleChange}
                                     className='w-full mb-5 py-1 px-2 rounded-lg outline-none'>
