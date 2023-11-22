@@ -3,9 +3,13 @@ import Plot from 'react-plotly.js';
 import { DataIdContext } from '../../App';
 
 const ScatterPlot = (xColumnName, yColumnArray) => {
-    const {dataId, setDataId} = useContext(DataIdContext);
+    const { dataId, setDataId } = useContext(DataIdContext);
     const [xValues, setXValues] = useState([]);
     const [yValues, setYValues] = useState([]);
+
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
     console.log(xColumnName, yColumnArray)
 
     useEffect(() => {
@@ -34,8 +38,11 @@ const ScatterPlot = (xColumnName, yColumnArray) => {
                     currArray.push(entry[0])
                 }
                 setYValues(currArray)
+                setLoading(false);
             })
             .catch((error) => {
+                setError(error);
+                setLoading(false);
                 console.log(error)
             });
     }, [dataId]);
@@ -83,6 +90,14 @@ const ScatterPlot = (xColumnName, yColumnArray) => {
     }
 
     let config = {
+    }
+
+    if (loading) {
+        return <p>Loading...</p>;
+    }
+
+    if (error) {
+        return <p>Error: {error.message}</p>;
     }
 
     return (
