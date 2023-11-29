@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { DataIdContext } from '../../App';
 import './Graph.css';
+import Loading from '../Utils/Loading';
 import Multiselect from 'multiselect-react-dropdown';
 import ScatterPlot from './ScatterPlot';
 
@@ -63,7 +64,7 @@ const Graph = () => {
     }
 
     if (loading) {
-        return <p>Loading...</p>;
+        return <Loading/>;
     }
 
     if (error) {

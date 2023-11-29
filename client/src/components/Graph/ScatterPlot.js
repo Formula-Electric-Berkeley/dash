@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 import Plot from 'react-plotly.js';
 import { DataIdContext } from '../../App';
+import Loading from '../Utils/Loading';
 
 const ScatterPlot = (props) => {
     const { dataId, setDataId } = useContext(DataIdContext);
@@ -131,7 +132,7 @@ const ScatterPlot = (props) => {
     }
 
     if (loading) {
-        return <p>Loading...</p>;
+        return <Loading/>;
     }
 
     if (error) {

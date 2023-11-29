@@ -4,6 +4,7 @@ import 'react-data-grid/lib/styles.css';
 import { AgGridReact } from "ag-grid-react";
 import 'ag-grid-community/styles/ag-grid.css';
 import "ag-grid-community/styles/ag-theme-alpine.css";
+import Loading from '../Utils/Loading';
 
 const FileTable = () => {
     const { dataId, setDataId } = useContext(DataIdContext);
@@ -55,7 +56,7 @@ const FileTable = () => {
     }, []);
 
     if (loading) {
-        return <p>Loading...</p>;
+        return <Loading/>;
     }
 
     if (error) {
