@@ -23,7 +23,7 @@ const DataTable = () => {
             .then((data) => {
                 let currColumns = []
                 for (const entry of data) {
-                    let columnName = entry[0].substring(3);
+                    let columnName = entry.substring(3);
                     currColumns.push({ field: columnName })
                 }
                 setColumns(currColumns)
