@@ -1,21 +1,20 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { DataIdContext } from '../../App';
+import React, { useState, useEffect } from 'react';
 import './Graph.css';
 import Loading from '../Utils/Loading';
 import Select from 'react-select';
 
 const TraceForm = (props) => {
-    const { dataId, setDataId } = useContext(DataIdContext);
-
     const [files, setFiles] = useState([]);
     const [fileNames, setFileNames] = useState([]);
-
-    const [sourceDataId, setSourceDataId] = useState('');
     const [axisOptions, setAxisOptions] = useState([]);
 
     const [traceName, setTraceName] = useState(props.index ? 'Trace ' + props.index : 'Trace');
+    const [sourceDataId, setSourceDataId] = useState('');
+    const [graphType, setGraphType] = useState('');
+    const [xAxis, setXAxis] = useState('');
+    const [yAxis, setYAxis] = useState('');
 
-    const [loading, setLoading] = useState(false); // TODO: set to 'true'
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
@@ -70,6 +69,19 @@ const TraceForm = (props) => {
 
     }, [sourceDataId]);
 
+    useEffect(() => {
+        const newData = {
+            traceName: traceName,
+            sourceDataId: sourceDataId,
+            graphType: graphType,
+            xAxis: xAxis,
+            yAxis: yAxis
+        }
+
+        props.onDataChange(props.index, newData)
+
+    }, [traceName, sourceDataId, graphType, xAxis, yAxis]);
+
     if (loading) {
         return <Loading />;
     }
@@ -109,7 +121,7 @@ const TraceForm = (props) => {
                 options={[{ value: 'scatter', label: 'Scatter Plot' },
                 { value: 'line', label: 'Line Chart' }]}
                 placeholder={<div>Graph Type</div>}
-                onChange={(e) => console.log(e.value)}
+                onChange={(e) => setGraphType(e.value)}
             />
 
             <Select
@@ -123,7 +135,7 @@ const TraceForm = (props) => {
                 }}
                 options={axisOptions}
                 placeholder={<div>X-Axis</div>}
-                onChange={(e) => console.log(e.value)}
+                onChange={(e) => setXAxis(e.value)}
             />
 
             <Select
@@ -137,7 +149,7 @@ const TraceForm = (props) => {
                 }}
                 options={axisOptions}
                 placeholder={<div>Y-Axis</div>}
-                onChange={(e) => console.log(e.value)}
+                onChange={(e) => setYAxis(e.value)}
             />
         </div >
     );

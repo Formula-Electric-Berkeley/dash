@@ -1,15 +1,13 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { DataIdContext } from '../../App';
+import React, { useState } from 'react';
 import './Graph.css';
 import Loading from '../Utils/Loading';
 import TraceForm from './TraceForm';
 
 const Graph = () => {
-    const { dataId, setDataId } = useContext(DataIdContext);
+    const [traceForms, setTraceForms] = useState([<TraceForm />])
+    const [traceChildDataArray, setTraceChildDataArray] = useState([{}]);
 
-    const [traceForms, setTraceForms] = useState([<TraceForm/>])
-
-    const [loading, setLoading] = useState(false); // TODO: set to 'true'
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     if (loading) {
@@ -23,6 +21,17 @@ const Graph = () => {
     const handleAddTraceForm = () => {
         const newTrace = Date.now()
         setTraceForms(v => [...v, newTrace])
+        setTraceChildDataArray([...traceChildDataArray, '']);
+    }
+
+    const handleGraphGenerate = () => {
+        console.log(traceChildDataArray)
+    }
+
+    const handleTraceChildDataChange = (index, data) => {
+        const newArray = [...traceChildDataArray];
+        newArray[index] = data;
+        setTraceChildDataArray(newArray);
     }
 
     return (
@@ -32,9 +41,15 @@ const Graph = () => {
                 bg-zinc-800 rounded-3xl'>
                     <h1 className='text-2xl'>Configure Graph</h1>
                     <div className='my-5 overflow-y-scroll min-h-96 max-h-96'>
-                        {traceForms.map((x, index) => <TraceForm index={index} />)}
+                        {traceForms.map((data, index) =>
+                            <TraceForm
+                                index={index}
+                                data={data}
+                                onDataChange={handleTraceChildDataChange}
+                            />)}
                         <button onClick={handleAddTraceForm}>Add Trace</button>
                     </div>
+                    <button onClick={handleGraphGenerate}>Generate Graph</button>
                 </div>
             </div>
 
