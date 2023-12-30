@@ -15,9 +15,9 @@ const FileTable = () => {
 
     const columns = [
         { field: 'filename' },
-        { field: 'size' },
+        { field: 'size', flex: 0.6 },
         { field: 'uploadDate' },
-        { field: 'ID', hide: true }
+        { field: 'ID', hide: false },
     ];
 
     const gridRef = useRef();
@@ -42,7 +42,7 @@ const FileTable = () => {
                         'filename': entry[1],
                         'size': parseFloat(entry[2].toFixed(2)),
                         'uploadDate': entry[3],
-                        'ID': entry[0],
+                        'ID': entry[0].substring(8),
                     })
                 }
 
@@ -56,7 +56,7 @@ const FileTable = () => {
     }, []);
 
     if (loading) {
-        return <Loading/>;
+        return <Loading />;
     }
 
     if (error) {
