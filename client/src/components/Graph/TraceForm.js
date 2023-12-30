@@ -4,7 +4,7 @@ import './Graph.css';
 import Loading from '../Utils/Loading';
 import Select from 'react-select';
 
-const TraceForm = () => {
+const TraceForm = (props) => {
     const { dataId, setDataId } = useContext(DataIdContext);
 
     const [files, setFiles] = useState([]);
@@ -12,6 +12,8 @@ const TraceForm = () => {
 
     const [sourceDataId, setSourceDataId] = useState('');
     const [axisOptions, setAxisOptions] = useState([]);
+
+    const [traceName, setTraceName] = useState(props.index ? 'Trace ' + props.index : 'Trace');
 
     const [loading, setLoading] = useState(false); // TODO: set to 'true'
     const [error, setError] = useState(null);
@@ -78,6 +80,9 @@ const TraceForm = () => {
 
     return (
         <div>
+            <input className='bg-transparent text-white outline-none border-none' name="traceName" value={traceName}
+                onChange={e => setTraceName(e.target.value)} />
+            <hr />
             <Select
                 className='my-5'
                 styles={{
@@ -134,7 +139,7 @@ const TraceForm = () => {
                 placeholder={<div>Y-Axis</div>}
                 onChange={(e) => console.log(e.value)}
             />
-        </div>
+        </div >
     );
 };
 

@@ -7,7 +7,7 @@ import TraceForm from './TraceForm';
 const Graph = () => {
     const { dataId, setDataId } = useContext(DataIdContext);
 
-    const [traceForms, setTraceForms] = useState([])
+    const [traceForms, setTraceForms] = useState([<TraceForm/>])
 
     const [loading, setLoading] = useState(false); // TODO: set to 'true'
     const [error, setError] = useState(null);
@@ -31,9 +31,10 @@ const Graph = () => {
                 <div className='max-w-lg w-4/5 m-auto p-10 
                 bg-zinc-800 rounded-3xl'>
                     <h1 className='text-2xl'>Configure Graph</h1>
-                    <TraceForm />
-                    {traceForms.map(() => <TraceForm />)}
-                    <button onClick={handleAddTraceForm }>Add Trace</button>
+                    <div className='my-5 overflow-y-scroll min-h-96 max-h-96'>
+                        {traceForms.map((x, index) => <TraceForm index={index} />)}
+                        <button onClick={handleAddTraceForm}>Add Trace</button>
+                    </div>
                 </div>
             </div>
 
