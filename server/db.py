@@ -77,6 +77,8 @@ def get_file_data_columns(file_id):
                     WHERE TABLE_NAME = '{file_id}';
                    ''')
     out = cursor.fetchall()
+    for i in range(len(out)):
+        out[i] = out[i][0]
     cursor.close()
     conn.close()
     return out
