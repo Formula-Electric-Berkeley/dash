@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import './Graph.css';
 import Loading from '../Utils/Loading';
 import TraceForm from './TraceForm';
+import GenerateGraph from './GenerateGraph';
 
 const Graph = () => {
     const [traceForms, setTraceForms] = useState([<TraceForm />])
     const [traceChildDataArray, setTraceChildDataArray] = useState([{}]);
+
+    const [showGraph, setShowGraph] = useState(false);
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -25,7 +28,7 @@ const Graph = () => {
     }
 
     const handleGraphGenerate = () => {
-        console.log(traceChildDataArray)
+        setShowGraph(true);
     }
 
     const handleTraceChildDataChange = (index, data) => {
@@ -36,23 +39,27 @@ const Graph = () => {
 
     return (
         <div className='w-full h-full'>
-            <div className='w-full h-full flex justify-center align-middle'>
-                <div className='max-w-lg w-4/5 m-auto p-10 
+            {!showGraph && (
+                <div className='w-full h-full flex justify-center align-middle'>
+                    <div className='max-w-lg w-4/5 m-auto p-10 
                 bg-zinc-800 rounded-3xl'>
-                    <h1 className='text-2xl'>Configure Graph</h1>
-                    <div className='my-5 overflow-y-scroll min-h-96 max-h-96'>
-                        {traceForms.map((data, index) =>
-                            <TraceForm
-                                index={index}
-                                data={data}
-                                onDataChange={handleTraceChildDataChange}
-                            />)}
-                        <button onClick={handleAddTraceForm}>Add Trace</button>
+                        <h1 className='text-2xl'>Configure Graph</h1>
+                        <div className='my-5 overflow-y-scroll min-h-96 max-h-96'>
+                            {traceForms.map((data, index) =>
+                                <TraceForm
+                                    index={index}
+                                    data={data}
+                                    onDataChange={handleTraceChildDataChange}
+                                />)}
+                            <button onClick={handleAddTraceForm}>Add Trace</button>
+                        </div>
+                        <button onClick={handleGraphGenerate}>Generate Graph</button>
                     </div>
-                    <button onClick={handleGraphGenerate}>Generate Graph</button>
                 </div>
-            </div>
-
+            )}
+            {showGraph &&
+                <GenerateGraph data={traceChildDataArray} />
+            }
         </div>
     );
 };

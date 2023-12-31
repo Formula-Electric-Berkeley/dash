@@ -75,7 +75,7 @@ const TraceForm = (props) => {
             sourceDataId: sourceDataId,
             graphType: graphType,
             xAxis: xAxis,
-            yAxis: yAxis
+            yAxis: yAxis,
         }
 
         props.onDataChange(props.index, newData)
