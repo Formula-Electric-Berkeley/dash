@@ -41,7 +41,7 @@ const Graph = () => {
         <div className='w-full h-full'>
             {!showGraph && (
                 <div className='w-full h-full flex justify-center align-middle'>
-                    <div className='max-w-lg w-4/5 m-auto p-10 
+                    <div className='max-w-2xl w-4/5 m-auto p-10 
                 rounded-3xl'>
                         <h1 className='text-2xl'>Configure Graph</h1>
                         <div className='my-5 overflow-y-scroll min-h-96 max-h-96'>
