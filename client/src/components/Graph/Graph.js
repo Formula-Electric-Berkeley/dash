@@ -51,7 +51,7 @@ const Graph = () => {
                                     data={data}
                                     onDataChange={handleTraceChildDataChange}
                                 />)}
-                            <button onClick={handleAddTraceForm}>Add Trace</button>
+                            <button className='secondary-btn' onClick={handleAddTraceForm}>Add Trace</button>
                         </div>
                         <button className='submit-btn' onClick={handleGraphGenerate}>Generate Graph</button>
                     </div>
