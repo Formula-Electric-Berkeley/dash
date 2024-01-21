@@ -1,12 +1,4 @@
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background: white;
-}
-
-h1 {
+.road h1 {
   color: white;
   font-weight: bolder;
   position: absolute;
@@ -25,8 +17,7 @@ h1 {
   perspective: 500px;
 }
 
-.road::before
-{
+.road::before {
   content:'';
   position: absolute;
   width: 100%;
