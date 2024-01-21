@@ -49,21 +49,24 @@ const SelectDataId = () => {
     return (
         <>
             {!showTable ? (
-                <div>
-                    <Select
-                        className='my-5'
-                        styles={{
-                            option: (baseStyles, state) => ({
-                                ...baseStyles,
-                                color: 'black',
-                                backgroundColor: state.isFocused || state.isSelected ? '#fbb414' : null,
-                            }),
-                        }}
-                        options={fileNames}
-                        placeholder={<div>Data Source</div>}
-                        onChange={(e) => setSelectedDataId(e.value)}
-                    />
-                    <button onClick={() => setShowTable(true)}>Show Data Preview</button>
+                <div className='w-full h-full p-10'>
+                    <div>
+                        <h1 className='text-2xl'>Data Preview</h1>
+                        <Select
+                            className='my-5'
+                            styles={{
+                                option: (baseStyles, state) => ({
+                                    ...baseStyles,
+                                    color: 'black',
+                                    backgroundColor: state.isFocused || state.isSelected ? '#fbb414' : null,
+                                }),
+                            }}
+                            options={fileNames}
+                            placeholder={<div>Data Source</div>}
+                            onChange={(e) => setSelectedDataId(e.value)}
+                        />
+                        <button onClick={() => setShowTable(true)}>Show Data Preview</button>
+                    </div>
                 </div>
             ) : (
                 <DataTable dataId={selectedDataId} />
