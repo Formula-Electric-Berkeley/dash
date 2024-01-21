@@ -1,14 +1,11 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { DataIdContext } from '../../App';
+import React, { useEffect, useState } from 'react';
 import 'react-data-grid/lib/styles.css';
 import { AgGridReact } from "ag-grid-react";
 import 'ag-grid-community/styles/ag-grid.css';
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import Loading from '../Utils/Loading';
 
-const DataTable = () => {
-    const { dataId, setDataId } = useContext(DataIdContext);
-
+const DataTable = (props) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [rows, setRows] = useState([]);
@@ -16,7 +13,7 @@ const DataTable = () => {
     const [displayColumns, setDisplayColumns] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:8000/get_file_data_columns?id=" + dataId, {
+        fetch("http://localhost:8000/get_file_data_columns?id=" + props.dataId, {
             method: "GET",
         })
             .then((response) => response.json())
@@ -34,10 +31,10 @@ const DataTable = () => {
                 console.log(error)
             });
 
-    }, [dataId]);
+    }, [props.dataId]);
 
     useEffect(() => {
-        fetch("http://localhost:8000/get_file_data?id=" + dataId, {
+        fetch("http://localhost:8000/get_file_data?id=" + props.dataId, {
             method: "GET",
         })
             .then((response) => response.json())
@@ -59,7 +56,7 @@ const DataTable = () => {
                 setLoading(false);
                 console.log(error)
             });
-    }, [columns, dataId]);
+    }, [columns, props.dataId]);
 
     useEffect(() => {
         if (rows.length !== 0) { setLoading(false) }

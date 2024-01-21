@@ -4,7 +4,6 @@ import Loading from '../Utils/Loading';
 import Select from 'react-select';
 
 const TraceForm = (props) => {
-    const [files, setFiles] = useState([]);
     const [fileNames, setFileNames] = useState([]);
     const [axisOptions, setAxisOptions] = useState([]);
 
@@ -37,7 +36,6 @@ const TraceForm = (props) => {
                     currFileNames.push({ value: entry[0], label: entry[1] + ` (${entry[0]})` })
                 }
 
-                setFiles(currFiles)
                 setFileNames(currFileNames)
             })
             .catch((error) => {

@@ -1,10 +1,10 @@
 import React from "react";
-import DataTable from "./DataTable";
+import SelectDataId from "./SelectDataId";
 
 const Storage = () => {
     return (
         <div className="w-full h-full">
-            <DataTable/>
+            <SelectDataId />
         </div>
     );
 };
