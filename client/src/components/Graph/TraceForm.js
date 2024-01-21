@@ -28,8 +28,10 @@ const TraceForm = (props) => {
                         'uploadDate': entry[3],
                         'ID': entry[0],
                     })
-                    currFileNames.push({ value: entry[0], label: entry[1] + ` (${entry[0]})` })
-                }
+                    currFileNames.push({
+                        value: entry[0], label: entry[1] +
+                            ` (${entry[0].replace(/dashdata/g, '')})`})
+                    }
 
                 setFileNames(currFileNames)
             })
