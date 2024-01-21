@@ -42,7 +42,7 @@ const Graph = () => {
             {!showGraph && (
                 <div className='w-full h-full flex justify-center align-middle'>
                     <div className='max-w-lg w-4/5 m-auto p-10 
-                bg-zinc-800 rounded-3xl'>
+                rounded-3xl'>
                         <h1 className='text-2xl'>Configure Graph</h1>
                         <div className='my-5 overflow-y-scroll min-h-96 max-h-96'>
                             {traceForms.map((data, index) =>
