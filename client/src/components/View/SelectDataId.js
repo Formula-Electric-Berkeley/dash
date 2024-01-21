@@ -65,7 +65,7 @@ const SelectDataId = () => {
                             placeholder={<div>Data Source</div>}
                             onChange={(e) => setSelectedDataId(e.value)}
                         />
-                        <button onClick={() => setShowTable(true)}>Show Data Preview</button>
+                        <button className='submit-btn' onClick={() => setShowTable(true)}>Show Data Preview</button>
                     </div>
                 </div>
             ) : (

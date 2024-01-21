@@ -53,7 +53,7 @@ const Graph = () => {
                                 />)}
                             <button onClick={handleAddTraceForm}>Add Trace</button>
                         </div>
-                        <button onClick={handleGraphGenerate}>Generate Graph</button>
+                        <button className='submit-btn' onClick={handleGraphGenerate}>Generate Graph</button>
                     </div>
                 </div>
             )}
