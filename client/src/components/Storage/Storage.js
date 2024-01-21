@@ -43,6 +43,20 @@ const Storage = () => {
 
     return (
         <div className="h-full w-full">
+            <div className='flex justify-between h-10 w-full mt-7 px-7'>
+                <div className='text-center'>
+                    <button className='w-full submit-btn'>UPLOAD DATA</button>
+                </div>
+                <div class="w-1/2 px-4 pr-0 flex flex-col justify-center">
+                    <div class="w-full h-3 rounded-full bg-gray-600">
+                        <div class="h-full rounded-full bg-emerald-600"
+                            style={{ minWidth: "12px", width: "1%" }}
+                        >
+                        </div>
+                    </div>
+                    <h1 className='text-sm'>49 MB / 10 GB (00.01%)</h1>
+                </div>
+            </div>
             <table class="w-full px-7 border-separate border-spacing-y-6">
                 <tr>
                     <th class="text-left text-m">FILENAME <i class="ml-2 table-heading-icon"></i></th>
