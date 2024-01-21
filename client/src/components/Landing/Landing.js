@@ -74,10 +74,12 @@ const model = Model.fromJson(json);
 const Landing = () => {
 
     const layoutRef = useRef();
-    let nextGridIndex = 1;
+    let nextGridIndexGraph = 1;
+    let nextGridIndexView = 1;
 
     const onRenderTabSet = (node, renderValues) => {
-        if (node._attributes.id === "#58616339-1440-4048-a048-114306773179") {
+        if (node._attributes.id === "#58616339-1440-4048-a048-114306773179" ||
+            node._attributes.id === "#2ab44c1e-49a3-46ac-94c7-c3f51b48c6dc") {
             renderValues.stickyButtons.push(
                 <img src="images/add.svg"
                     alt="Add"
@@ -91,10 +93,17 @@ const Landing = () => {
     }
 
     const onAddFromTabSetButton = (node) => {
-        (layoutRef.current).addTabToTabSet(node.getId(), {
-            component: "Graph",
-            name: "GRAPH " + nextGridIndex++
-        });
+        if (node.getId() === "#58616339-1440-4048-a048-114306773179") {
+            (layoutRef.current).addTabToTabSet(node.getId(), {
+                component: "Graph",
+                name: "GRAPH " + nextGridIndexGraph++
+            });
+        } else if (node.getId() === "#2ab44c1e-49a3-46ac-94c7-c3f51b48c6dc") {
+            (layoutRef.current).addTabToTabSet(node.getId(), {
+                component: "View",
+                name: "VIEW " + nextGridIndexView++
+            });
+        }
     }
 
     const factory = (node) => {
