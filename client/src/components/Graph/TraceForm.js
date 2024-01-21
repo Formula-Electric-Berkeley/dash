@@ -13,17 +13,12 @@ const TraceForm = (props) => {
     const [xAxis, setXAxis] = useState('');
     const [yAxis, setYAxis] = useState('');
 
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
     useEffect(() => {
         fetch("http://localhost:8000/get_files_info", {
             method: "GET",
         })
             .then((response) => response.json())
             .then((data) => {
-                setLoading(false);
-
                 let currFiles = []
                 let currFileNames = []
                 for (const entry of data) {
@@ -39,8 +34,6 @@ const TraceForm = (props) => {
                 setFileNames(currFileNames)
             })
             .catch((error) => {
-                setError(error);
-                setLoading(false);
                 console.log(error)
             });
     }, []);
@@ -57,11 +50,8 @@ const TraceForm = (props) => {
                     currElements.push({ value: columnName, label: columnName })
                 }
                 setAxisOptions(currElements)
-                setLoading(false);
             })
             .catch((error) => {
-                setError(error);
-                setLoading(false);
                 console.log(error)
             });
 
@@ -79,14 +69,6 @@ const TraceForm = (props) => {
         props.onDataChange(props.index, newData)
 
     }, [traceName, sourceDataId, graphType, xAxis, yAxis]);
-
-    if (loading) {
-        return <Loading />;
-    }
-
-    if (error) {
-        return <p>Error: {error.message}</p>;
-    }
 
     return (
         <div>
