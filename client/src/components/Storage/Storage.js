@@ -56,25 +56,31 @@ const Storage = () => {
     }, []);
 
     function handleChange(event) {
-        setFile(event.target.files[0]);
-        event.preventDefault();
+        if (window.confirm(`Confirm upload for:\n
+            ${event.target.files[0].name}`)) {
+            setLoading(true);
 
-        const data = new FormData();
-        data.append('file', event.target.files[0]);
-        data.append('filename', event.target.files[0].filename);
+            setFile(event.target.files[0]);
+            event.preventDefault();
 
-        fetch('http://localhost:8000/upload', {
-            mode: "no-cors",
-            method: 'POST',
-            body: data,
-        }).then((response) => {
-            console.log(response)
-            if (window.confirm("Do you want to reload the page to reflect your changes?\nNOTE: Your current layout will not be saved!")) {
-                window.location.reload()
-            }
-        }).catch((error) => {
-            window.alert("Error uploading file: ", error);
-        });
+            const data = new FormData();
+            data.append('file', event.target.files[0]);
+            data.append('filename', event.target.files[0].filename);
+
+            fetch('http://localhost:8000/upload', {
+                mode: "no-cors",
+                method: 'POST',
+                body: data,
+            }).then((response) => {
+                setLoading(false);
+                if (window.confirm("Uploaded Successfully!!!\n\nDo you want to reload the page to reflect your changes?\nNOTE: Your current layout will not be saved!")) {
+                    window.location.reload()
+                }
+                setLoading(false);
+            }).catch((error) => {
+                window.alert("Error uploading file: ", error);
+            });
+        }
     }
 
     const deleteDataRecord = (deleteRecordID, deleteRecordFilename, deleteRecordUploadDate) => {
