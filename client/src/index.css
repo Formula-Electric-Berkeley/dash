@@ -20,6 +20,10 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
+input[type=file]{ 
+    color:transparent;
+}
+
 .submit-btn {
     background-color: var(--yellow);
     padding: 5px 20px;
