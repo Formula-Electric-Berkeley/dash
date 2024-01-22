@@ -25,6 +25,17 @@ def get_db_size_usage():
     return out
 
 
+def remove_file(dataID):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(f"DROP TABLE {dataID}")
+    cursor.execute(f"DELETE FROM files WHERE id = '{dataID}'")
+    cursor.close()
+    conn.commit()
+    conn.close()
+    return [f"Successfully Deleted f{dataID}"]
+
+
 def add_file(filename, filepath, size, uploadDate):
     conn = get_db_connection()
     cursor = conn.cursor()
