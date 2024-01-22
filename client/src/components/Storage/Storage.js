@@ -69,7 +69,9 @@ const Storage = () => {
             body: data,
         }).then((response) => {
             console.log(response)
-            window.location.reload();
+            if (window.confirm("Do you want to reload the page to reflect your changes?\nNOTE: Your current layout will not be saved!")) {
+                window.location.reload()
+            }
         }).catch((error) => {
             window.alert("Error uploading file: ", error);
         });
@@ -86,6 +88,9 @@ const Storage = () => {
                 .then((response) => response.json())
                 .then((data) => {
                     console.log(data)
+                    if (window.confirm("Do you want to reload the page to reflect your changes?\nNOTE: Your current layout will not be saved!")) {
+                        window.location.reload()
+                    }
                 })
                 .catch((error) => {
                     setError(error);
