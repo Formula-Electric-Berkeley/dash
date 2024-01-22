@@ -80,12 +80,17 @@ const Storage = () => {
             FILE: ${deleteRecordFilename}
             UPLOAD DATE: ${deleteRecordUploadDate}`)) {
             console.log(deleteRecordID)
-            //         fetch('./delete_document/' + id, {
-            //             method: 'DELETE',
-            //             headers: {
-            //                 'Content-Type': 'application/json',
-            //             }
-            //         }).then(location.reload());
+            fetch("http://localhost:8000/delete?id=dashdata" + deleteRecordID, {
+                method: "GET",
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data)
+                })
+                .catch((error) => {
+                    setError(error);
+                    console.log(error)
+                });
         }
     }
 
