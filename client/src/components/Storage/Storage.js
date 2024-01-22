@@ -85,7 +85,7 @@ const Storage = () => {
 
     return (
         <div className="h-full w-full">
-            <div className='flex justify-between h-10 w-full mt-7 px-7'>
+            <div className='flex justify-between h-15 w-full mt-7 px-7'>
                 <div className='flex justify-center items-center text-center'>
                     <form ref={formRef}>
                         <label htmlFor="filePicker"
