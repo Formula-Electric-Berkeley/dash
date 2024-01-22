@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './Graph.css';
-import Loading from '../Utils/Loading';
 import Select from 'react-select';
 
 const TraceForm = (props) => {
     const [fileNames, setFileNames] = useState([]);
     const [axisOptions, setAxisOptions] = useState([]);
 
-    const [traceName, setTraceName] = useState(props.index ? 'Trace ' + props.index : 'Trace');
+    const [traceName, setTraceName] = useState(props.index ? 'Trace ' + props.index : 'Trace 1');
     const [sourceDataId, setSourceDataId] = useState('');
     const [graphType, setGraphType] = useState('');
     const [xAxis, setXAxis] = useState('');
