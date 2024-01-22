@@ -41,6 +41,11 @@ def upload():
         return "SUCCESS"
 
 
+@app.route("/get_db_size_usage", methods=["GET"])
+def get_db_size_usage():
+    return db.get_db_size_usage()
+
+
 @app.route("/get_files_info", methods=["GET"])
 def get_files_info():
     return db.get_all_file_info()
