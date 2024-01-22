@@ -3,6 +3,8 @@ import 'react-data-grid/lib/styles.css';
 import Loading from '../Utils/Loading';
 import Select from 'react-select';
 import DataTable from './DataTable';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMagnifyingGlassChart } from '@fortawesome/free-solid-svg-icons'
 
 const SelectDataId = () => {
     const [showTable, setShowTable] = useState(false);
@@ -54,7 +56,8 @@ const SelectDataId = () => {
             {!showTable ? (
                 <div className='w-full h-full p-10'>
                     <div>
-                        <h1 className='text-2xl'>Data Preview</h1>
+                        <h1 className='text-2xl'>Data Preview
+                            <FontAwesomeIcon className='icon ml-3' icon={faMagnifyingGlassChart} /></h1>
                         <Select
                             className='my-5'
                             styles={{
