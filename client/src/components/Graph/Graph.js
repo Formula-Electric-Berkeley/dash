@@ -50,7 +50,7 @@ const Graph = () => {
                         <div className='my-5 overflow-y-scroll min-h-96 max-h-96'>
                             {traceForms.map((data, index) =>
                                 <TraceForm
-                                    index={index + 1}
+                                    index={index}
                                     data={data}
                                     onDataChange={handleTraceChildDataChange}
                                 />)}

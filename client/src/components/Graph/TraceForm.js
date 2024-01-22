@@ -6,7 +6,7 @@ const TraceForm = (props) => {
     const [fileNames, setFileNames] = useState([]);
     const [axisOptions, setAxisOptions] = useState([]);
 
-    const [traceName, setTraceName] = useState(props.index ? 'Trace ' + props.index : 'Trace 1');
+    const [traceName, setTraceName] = useState(`Trace ${parseInt(props.index) + 1}`);
     const [sourceDataId, setSourceDataId] = useState('');
     const [graphType, setGraphType] = useState('');
     const [xAxis, setXAxis] = useState('');
