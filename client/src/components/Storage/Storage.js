@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Loading from '../Utils/Loading';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowUpFromBracket } from '@fortawesome/free-solid-svg-icons'
+import { faArrowUpFromBracket, faXmark } from '@fortawesome/free-solid-svg-icons'
 
 const Storage = () => {
     const [file, setFile] = useState();
@@ -75,6 +75,20 @@ const Storage = () => {
         });
     }
 
+    const deleteDataRecord = (deleteRecordID, deleteRecordFilename, deleteRecordUploadDate) => {
+        if (window.confirm(`Are you sure you want to delete this data?\nThis action cannot be undone.\n
+            FILE: ${deleteRecordFilename}
+            UPLOAD DATE: ${deleteRecordUploadDate}`)) {
+            console.log(deleteRecordID)
+            //         fetch('./delete_document/' + id, {
+            //             method: 'DELETE',
+            //             headers: {
+            //                 'Content-Type': 'application/json',
+            //             }
+            //         }).then(location.reload());
+        }
+    }
+
     if (loading) {
         return <Loading />;
     }
@@ -107,7 +121,7 @@ const Storage = () => {
                     <h1 className='text-sm'>{dbUsageSize} GB / 10 GB ({`${dbUsageSize / 10 * 100}%`})</h1>
                 </div>
             </div>
-            <table class="w-full px-7 border-separate border-spacing-y-6">
+            <table class="w-full px-7 pr-12 border-separate border-spacing-y-6">
                 <tr>
                     <th class="text-left text-m">FILENAME <i class="ml-2 table-heading-icon"></i></th>
                     <th class="text-center text-m">SIZE <i class="ml-2 table-heading-icon"></i></th>
@@ -122,7 +136,14 @@ const Storage = () => {
                             <p class="my-3"><code>{item.size} MB</code></p>
                         </td>
                         <td class="text-m border-solid border-2 border-white border-l-0 text-right italic">
-                            <p class="m-3">{item.uploadDate}</p>
+                            <p class="m-3 mr-0">{item.uploadDate}
+                                <i onClick={() => { deleteDataRecord(item.ID, item.filename, item.uploadDate) }}>
+                                    <FontAwesomeIcon
+                                        className='text-zinc-500 hover:text-red-600 duration-300 relative left-7
+                                        text-xl hover:cursor-pointer'
+                                        icon={faXmark} />
+                                </i>
+                            </p>
                         </td>
                     </tr>
                 ))}
