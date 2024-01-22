@@ -14,6 +14,17 @@ def get_db_connection():
     return psycopg2.connect(CONNECTION_STRING)
 
 
+def get_db_size_usage():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT SUM(size) FROM files")
+    out = cursor.fetchall()
+    out = str(round(out[0][0] / 1000, 2))
+    cursor.close()
+    conn.close()
+    return out
+
+
 def add_file(filename, filepath, size, uploadDate):
     conn = get_db_connection()
     cursor = conn.cursor()
