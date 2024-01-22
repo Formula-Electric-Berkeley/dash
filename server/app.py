@@ -41,6 +41,11 @@ def upload():
         return "SUCCESS"
 
 
+@app.route("/delete", methods=["GET"])
+def delete():
+    return db.remove_file(request.args.get('id'))
+
+
 @app.route("/get_db_size_usage", methods=["GET"])
 def get_db_size_usage():
     return db.get_db_size_usage()
