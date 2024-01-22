@@ -24,6 +24,10 @@ input[type=file]{
     color:transparent;
 }
 
+.icon {
+    color: var(--blue);
+}
+
 .submit-btn {
     background-color: var(--yellow);
     padding: 5px 20px;
