@@ -3,12 +3,28 @@ import Loading from '../Utils/Loading';
 
 const Storage = () => {
     const [file, setFile] = useState();
+    const [dbUsageSize, setDbUsageSize] = useState();
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [rows, setRows] = useState([]);
 
     const formRef = useRef();
+
+    useEffect(() => {
+        fetch("http://localhost:8000/get_db_size_usage", {
+            method: "GET",
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setDbUsageSize(data);
+            })
+            .catch((error) => {
+                setError(error);
+                setLoading(false);
+                console.log(error)
+            });
+    }, []);
 
     useEffect(() => {
         fetch("http://localhost:8000/get_files_info", {
@@ -72,7 +88,7 @@ const Storage = () => {
                     <form ref={formRef}>
                         <label htmlFor="filePicker"
                             className='submit-btn hover:cursor-pointer'>
-                            UPLOAD DATA
+                            Upload Data
                         </label>
                         <input id="filePicker" onChange={handleChange}
                             className="hidden" type={"file"} />
@@ -81,11 +97,11 @@ const Storage = () => {
                 <div class="w-1/2 px-4 pr-0 flex flex-col justify-center">
                     <div class="w-full h-3 rounded-full bg-gray-600">
                         <div class="h-full rounded-full bg-emerald-600"
-                            style={{ minWidth: "12px", width: "1%" }}
+                            style={{ minWidth: "12px", width: `${ dbUsageSize / 10 * 100 }%` }}
                         >
                         </div>
                     </div>
-                    <h1 className='text-sm'>49 MB / 10 GB (00.01%)</h1>
+                    <h1 className='text-sm'>{dbUsageSize} GB / 10 GB ({`${ dbUsageSize / 10 * 100 }%`})</h1>
                 </div>
             </div>
             <table class="w-full px-7 border-separate border-spacing-y-6">
