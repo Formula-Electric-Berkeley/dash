@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Loading from '../Utils/Loading';
 
 const Storage = () => {
+    const [file, setFile] = useState();
+
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [rows, setRows] = useState([]);
+
+    const formRef = useRef();
 
     useEffect(() => {
         fetch("http://localhost:8000/get_files_info", {
@@ -33,6 +37,26 @@ const Storage = () => {
             });
     }, []);
 
+    function handleChange(event) {
+        setFile(event.target.files[0]);
+        event.preventDefault();
+
+        const data = new FormData();
+        data.append('file', event.target.files[0]);
+        data.append('filename', event.target.files[0].filename);
+
+        fetch('http://localhost:8000/upload', {
+            mode: "no-cors",
+            method: 'POST',
+            body: data,
+        }).then((response) => {
+            console.log(response)
+            window.location.reload();
+        }).catch((error) => {
+            window.alert("Error uploading file: ", error);
+        });
+    }
+
     if (loading) {
         return <Loading />;
     }
@@ -45,7 +69,14 @@ const Storage = () => {
         <div className="h-full w-full">
             <div className='flex justify-between h-10 w-full mt-7 px-7'>
                 <div className='text-center'>
-                    <button className='w-full submit-btn'>UPLOAD DATA</button>
+                    <form ref={formRef}>
+                        <label htmlFor="filePicker"
+                            className='submit-btn hover:cursor-pointer'>
+                            UPLOAD DATA
+                        </label>
+                        <input id="filePicker" onChange={handleChange}
+                            className="hidden" type={"file"} />
+                    </form>
                 </div>
                 <div class="w-1/2 px-4 pr-0 flex flex-col justify-center">
                     <div class="w-full h-3 rounded-full bg-gray-600">
