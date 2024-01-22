@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Loading from '../Utils/Loading';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowUpFromBracket } from '@fortawesome/free-solid-svg-icons'
 
 const Storage = () => {
     const [file, setFile] = useState();
@@ -89,6 +91,7 @@ const Storage = () => {
                         <label htmlFor="filePicker"
                             className='submit-btn hover:cursor-pointer'>
                             Upload Data
+                            <FontAwesomeIcon className='ml-2' icon={faArrowUpFromBracket} />
                         </label>
                         <input id="filePicker" onChange={handleChange}
                             className="hidden" type={"file"} />
@@ -97,11 +100,11 @@ const Storage = () => {
                 <div class="w-1/2 px-4 pr-0 flex flex-col justify-center">
                     <div class="w-full h-3 rounded-full bg-gray-600">
                         <div class="h-full rounded-full bg-emerald-600"
-                            style={{ minWidth: "12px", width: `${ dbUsageSize / 10 * 100 }%` }}
+                            style={{ minWidth: "12px", width: `${dbUsageSize / 10 * 100}%` }}
                         >
                         </div>
                     </div>
-                    <h1 className='text-sm'>{dbUsageSize} GB / 10 GB ({`${ dbUsageSize / 10 * 100 }%`})</h1>
+                    <h1 className='text-sm'>{dbUsageSize} GB / 10 GB ({`${dbUsageSize / 10 * 100}%`})</h1>
                 </div>
             </div>
             <table class="w-full px-7 border-separate border-spacing-y-6">

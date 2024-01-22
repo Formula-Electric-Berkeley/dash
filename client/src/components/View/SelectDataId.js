@@ -4,7 +4,7 @@ import Loading from '../Utils/Loading';
 import Select from 'react-select';
 import DataTable from './DataTable';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMagnifyingGlassChart } from '@fortawesome/free-solid-svg-icons'
+import { faMagnifyingGlassChart, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 
 const SelectDataId = () => {
     const [showTable, setShowTable] = useState(false);
@@ -71,7 +71,10 @@ const SelectDataId = () => {
                             placeholder={<div>Data Source</div>}
                             onChange={(e) => setSelectedDataId(e.value)}
                         />
-                        <button className='submit-btn' onClick={() => setShowTable(true)}>Show Data Preview</button>
+                        <button className='submit-btn' onClick={() => setShowTable(true)}>
+                            Show Data Preview
+                            <FontAwesomeIcon className='ml-2' icon={faArrowRight} />
+                        </button>
                     </div>
                 </div>
             ) : (

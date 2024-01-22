@@ -4,7 +4,7 @@ import Loading from '../Utils/Loading';
 import TraceForm from './TraceForm';
 import GenerateGraph from './GenerateGraph';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChartLine } from '@fortawesome/free-solid-svg-icons'
+import { faChartLine, faCirclePlus, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 
 const Graph = () => {
     const [traceForms, setTraceForms] = useState([<TraceForm />])
@@ -54,9 +54,15 @@ const Graph = () => {
                                     data={data}
                                     onDataChange={handleTraceChildDataChange}
                                 />)}
-                            <button className='secondary-btn' onClick={handleAddTraceForm}>Add Trace</button>
+                            <button className='secondary-btn' onClick={handleAddTraceForm}>
+                                Add Trace
+                                <FontAwesomeIcon className='ml-2' icon={faCirclePlus} />
+                            </button>
                         </div>
-                        <button className='submit-btn' onClick={handleGraphGenerate}>Generate Graph</button>
+                        <button className='submit-btn' onClick={handleGraphGenerate}>
+                            Generate Graph
+                            <FontAwesomeIcon className='ml-2' icon={faArrowRight} />
+                        </button>
                     </div>
                 </div>
             )}
