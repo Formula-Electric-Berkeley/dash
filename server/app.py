@@ -71,11 +71,6 @@ def get_column_data():
     return db.get_column_data(request.args.get('id'), request.args.get('column'))
 
 
-@app.errorhandler(404)
-def page_not_found(e):
-    return "ERROR 404: Not Found"
-
-
 def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
