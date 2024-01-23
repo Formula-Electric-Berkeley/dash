@@ -47,7 +47,7 @@ const Graph = () => {
                 rounded-3xl'>
                         <h1 className='text-2xl'>Configure Graph
                             <FontAwesomeIcon className='icon ml-3' icon={faChartLine} /></h1>
-                        <div className='my-5 overflow-y-scroll min-h-96 max-h-96'>
+                        <div className='my-5 h-full'>
                             {traceForms.map((data, index) =>
                                 <TraceForm
                                     index={index}
