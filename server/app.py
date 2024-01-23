@@ -73,7 +73,7 @@ def get_column_data():
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template("404.html")
+    return "ERROR 404: Not Found"
 
 
 def allowed_file(filename):
