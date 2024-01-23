@@ -71,10 +71,21 @@ def add_file(filename, filepath, size, uploadDate):
 
         values_str += f"({row_str}), "
 
-    values_str = values_str[:-2]
+        if len(values_str) / 1000000 > 15:
+            values_str = values_str[:-2]
+            values_str = values_str.replace("'nan'", "'0'")
 
-    #print(f'''INSERT INTO {unique_id} ({insert_str}) VALUES {values_str}''')
-    cursor.execute(f'''INSERT INTO {unique_id} ({insert_str}) VALUES {values_str}''')
+            cursor.execute(
+                f'''INSERT INTO {unique_id} ({insert_str}) VALUES {values_str}''')
+            conn.commit()
+
+            values_str = ""
+
+    values_str = values_str[:-2]
+    values_str = values_str.replace("'nan'", "'0'")
+
+    cursor.execute(
+        f'''INSERT INTO {unique_id} ({insert_str}) VALUES {values_str}''')
     conn.commit()
     cursor.close()
     conn.close()
