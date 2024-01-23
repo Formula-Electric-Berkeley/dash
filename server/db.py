@@ -94,7 +94,7 @@ def add_file(filename, filepath, size, uploadDate):
 def get_all_file_info():
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM files")
+    cursor.execute("SELECT * FROM files ORDER BY uploadDate DESC, filename")
     out = cursor.fetchall()
     cursor.close()
     conn.close()
