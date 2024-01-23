@@ -14,7 +14,7 @@ const Storage = () => {
     const formRef = useRef();
 
     useEffect(() => {
-        fetch("http://localhost:8000/get_db_size_usage", {
+        fetch("https://ev.berkeley.edu/dash-backend/get_db_size_usage", {
             method: "GET",
         })
             .then((response) => response.json())
@@ -29,7 +29,7 @@ const Storage = () => {
     }, []);
 
     useEffect(() => {
-        fetch("http://localhost:8000/get_files_info", {
+        fetch("https://ev.berkeley.edu/dash-backend/get_files_info", {
             method: "GET",
         })
             .then((response) => response.json())
@@ -67,7 +67,7 @@ const Storage = () => {
             data.append('file', event.target.files[0]);
             data.append('filename', event.target.files[0].filename);
 
-            fetch('http://localhost:8000/upload', {
+            fetch('https://ev.berkeley.edu/dash-backend/upload', {
                 mode: "no-cors",
                 method: 'POST',
                 body: data,
@@ -88,7 +88,7 @@ const Storage = () => {
             FILE: ${deleteRecordFilename}
             UPLOAD DATE: ${deleteRecordUploadDate}`)) {
             console.log(deleteRecordID)
-            fetch("http://localhost:8000/delete?id=dashdata" + deleteRecordID, {
+            fetch("https://ev.berkeley.edu/dash-backend/delete?id=dashdata" + deleteRecordID, {
                 method: "GET",
             })
                 .then((response) => response.json())

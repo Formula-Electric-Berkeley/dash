@@ -15,7 +15,7 @@ const ScatterPlot = (props) => {
     const [dataTMP, setDataTMP] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:8000/get_column_data?column=col" + props.xColumnName + "&id=" + dataId, {
+        fetch("https://ev.berkeley.edu/dash-backend/get_column_data?column=col" + props.xColumnName + "&id=" + dataId, {
             method: "GET",
         })
             .then((response) => response.json())
@@ -30,7 +30,7 @@ const ScatterPlot = (props) => {
                 console.log(error)
             });
 
-        fetch("http://localhost:8000/get_column_data?column=colgyroxs&id=" + dataId, {
+        fetch("https://ev.berkeley.edu/dash-backend/get_column_data?column=colgyroxs&id=" + dataId, {
             method: "GET",
         })
             .then((response) => response.json())
@@ -57,7 +57,7 @@ const ScatterPlot = (props) => {
 
         let allTraces = []
         for (const yColumnName of yColumnNamesTmp) {
-            fetch("http://localhost:8000/get_column_data?column=col" + yColumnName + "&id=" + dataId, {
+            fetch("https://ev.berkeley.edu/dash-backend/get_column_data?column=col" + yColumnName + "&id=" + dataId, {
                 method: "GET",
             })
                 .then((response) => response.json())

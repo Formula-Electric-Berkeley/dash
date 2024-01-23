@@ -15,7 +15,7 @@ const SelectDataId = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch("http://localhost:8000/get_files_info", {
+        fetch("https://ev.berkeley.edu/dash-backend/get_files_info", {
             method: "GET",
         })
             .then((response) => response.json())

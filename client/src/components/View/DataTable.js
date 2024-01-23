@@ -13,7 +13,7 @@ const DataTable = (props) => {
     const [displayColumns, setDisplayColumns] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:8000/get_file_data_columns?id=" + props.dataId, {
+        fetch("https://ev.berkeley.edu/dash-backend/get_file_data_columns?id=" + props.dataId, {
             method: "GET",
         })
             .then((response) => response.json())
@@ -34,7 +34,7 @@ const DataTable = (props) => {
     }, [props.dataId]);
 
     useEffect(() => {
-        fetch("http://localhost:8000/get_file_data?id=" + props.dataId, {
+        fetch("https://ev.berkeley.edu/dash-backend/get_file_data?id=" + props.dataId, {
             method: "GET",
         })
             .then((response) => response.json())
