@@ -31,7 +31,6 @@ const GenerateGraph = (props) => {
                     }
                     trace.x = currArray
                     setRevise((revise) => revise + 1)
-                    setLoading(false);
                 })
                 .catch((error) => {
                     console.log(error)
@@ -48,7 +47,7 @@ const GenerateGraph = (props) => {
                         currArray.push(entry[0])
                     }
                     trace.y = currArray
-                    setLoading(false);
+                    setRevise((revise) => revise + 1)
                 })
                 .catch((error) => {
                     console.log(error)
@@ -56,7 +55,7 @@ const GenerateGraph = (props) => {
         }
     }, [props.data]);
 
-    if (loading) {
+    if (revise / 2 <= props.data.length) {
         return <Loading />;
     }
 
