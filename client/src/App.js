@@ -11,7 +11,7 @@ function App() {
     return (
         <div>
             <DataIdContext.Provider value={{ dataId, setDataId }}>
-                <Router basename="/dash2">
+                <Router basename="/dash">
                     <Routes>
                         <Route path="/" exact element={<Landing />} />
                     </Routes>
