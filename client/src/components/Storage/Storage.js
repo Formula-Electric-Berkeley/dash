@@ -134,7 +134,7 @@ const Storage = () => {
                         >
                         </div>
                     </div>
-                    <h1 className='text-sm'>{dbUsageSize} GB / 10 GB ({`${dbUsageSize / 10 * 100}%`})</h1>
+                    <h1 className='text-sm'>{dbUsageSize} GB / 10 GB ({`${Math.round(dbUsageSize / 10 * 100 * 100) / 100}%`})</h1>
                 </div>
             </div>
             <table class="w-full px-7 pr-12 border-separate border-spacing-y-6">
