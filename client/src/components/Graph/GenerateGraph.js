@@ -55,7 +55,11 @@ const GenerateGraph = (props) => {
         }
     }, [props.data]);
 
-    if (revise / 2 <= props.data.length) {
+    useEffect(() => {
+        if (revise / 2 >= props.data.length) setLoading(false);
+    }, [revise, props.data.length]);
+
+    if (loading) {
         return <Loading />;
     }
 
