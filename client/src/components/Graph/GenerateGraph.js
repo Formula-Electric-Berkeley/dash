@@ -19,7 +19,7 @@ const GenerateGraph = (props) => {
                 trace.mode = 'lines'
             }
 
-            fetch("https://ev.berkeley.edu/dash-backend/get_column_data?column=col" +
+            fetch("https://ev.studentorg.berkeley.edu/dash-backend/run.fcgi/get_column_data?column=col" +
                 trace.xAxis + "&id=" + trace.sourceDataId, {
                 method: "GET",
             })
@@ -36,7 +36,7 @@ const GenerateGraph = (props) => {
                     console.log(error)
                 });
 
-            fetch("https://ev.berkeley.edu/dash-backend/get_column_data?column=col" +
+            fetch("https://ev.studentorg.berkeley.edu/dash-backend/run.fcgi/get_column_data?column=col" +
                 trace.yAxis + "&id=" + trace.sourceDataId, {
                 method: "GET",
             })

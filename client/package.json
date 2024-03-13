@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://ev.berkeley.edu/dash-backend/",
+  "proxy": "https://ev.studentorg.berkeley.edu/dash-backend/run.fcgi/",
   "homepage": "https://ev.berkeley.edu/dash/",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.1",

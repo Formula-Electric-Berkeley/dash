@@ -14,7 +14,7 @@ const UploadFile = () => {
         data.append('file', file);
         data.append('filename', file.filename);
 
-        fetch('https://ev.berkeley.edu/dash-backend/upload', {
+        fetch('https://ev.studentorg.berkeley.edu/dash-backend/run.fcgi/upload', {
             mode: "no-cors",
             method: 'POST',
             body: data,

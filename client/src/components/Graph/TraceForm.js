@@ -13,7 +13,7 @@ const TraceForm = (props) => {
     const [yAxis, setYAxis] = useState('');
 
     useEffect(() => {
-        fetch("https://ev.berkeley.edu/dash-backend/get_files_info", {
+        fetch("https://ev.studentorg.berkeley.edu/dash-backend/run.fcgi/get_files_info", {
             method: "GET",
         })
             .then((response) => response.json())
@@ -40,7 +40,7 @@ const TraceForm = (props) => {
     }, []);
 
     useEffect(() => {
-        fetch("https://ev.berkeley.edu/dash-backend/get_file_data_columns?id=" + sourceDataId, {
+        fetch("https://ev.studentorg.berkeley.edu/dash-backend/run.fcgi/get_file_data_columns?id=" + sourceDataId, {
             method: "GET",
         })
             .then((response) => response.json())
